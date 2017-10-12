@@ -6,6 +6,9 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Http\Request;
+use App\Role;
 
 class RegisterController extends Controller
 {
@@ -20,7 +23,7 @@ class RegisterController extends Controller
     |
     */
 
-    use RegistersUsers;
+    use RegistersUsers, HasRoles;
 
     /**
      * Where to redirect users after registration.
@@ -66,6 +69,22 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $data['password'] = bcrypt($data['password']);
-        return User::create($data);
+        $user = User::create($data);
+        // $role = Role::create(['name' => 'student']);
+        $user->assignRole('student');
+        return $user;
+        // return User::create($data);
     }
+
+    /**
+     * The user has been registered.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    // protected function registered(Request $request, $user)
+    // {
+    //     $user->assignRole('admin');
+    // }
 }

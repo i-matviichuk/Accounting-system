@@ -29,7 +29,8 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
+                        <!-- {{ config('app.name', 'Laravel') }} -->
+                        Accounting system
                     </a>
                 </div>
 
@@ -70,7 +71,6 @@
                 </div>
             </div>
         </nav>
-
         @yield('content')
     </div>
 

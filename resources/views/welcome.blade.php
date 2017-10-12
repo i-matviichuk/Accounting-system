@@ -1,4 +1,3 @@
-<!doctype html>
 <html lang="{{ app()->getLocale() }}">
     <head>
         <meta charset="utf-8">
@@ -91,6 +90,36 @@
                     <a href="https://forge.laravel.com">Forge</a>
                     <a href="https://github.com/laravel/laravel">GitHub</a>
                 </div>
+
+
+
+
+               <!--  <table class="table table-bordered table-striped table-hover" id="data-table">
+    <thead>
+    <tr>
+        ....
+        <th>Created At</th>
+        @can('edit_users', 'delete_users')
+            <th class="text-center">Actions</th>
+        @endcan
+    </tr>
+    </thead>
+    <tbody>
+    @foreach($result as $item)
+        <tr>
+            ...
+            @can('edit_users')
+            <td class="text-center">
+                // action buttons
+            </td>
+            @endcan
+        </tr>
+    @endforeach
+    </tbody>
+</table>
+ -->
+
+
             </div>
         </div>
     </body>

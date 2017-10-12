@@ -12,14 +12,41 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
-Route::get('upload', 'UploadUsers@showForm');
 
-Route::post('upload', 'UploadUsers@store');
+Route::get('/header', function() {
+	return view('layouts/header');
+});
 
-Route::get('/profile/{user}', 'ProfileController@showProfile');
+Route::group( ['middleware' => ['auth']], function() {
+    Route::resource('users', 'UserController');
+    Route::resource('roles', 'RoleController');
+    // Route::resource('posts', 'PostController');
+});
+
+Route::get('/users', 'UserController@show')->middleware('role:admin');
+
+Route::get('new', 'RegisterUser@show')->middleware('role:admin');
+
+Route::get('/marks/{discipline}', 'MarkController@index')->name('marks');
+
+Route::get('/', 'UserController@index');
+
+Route::get('/admin', 'AdminController@showProfile')->middleware('role:admin');
+
+Route::get('new', 'UploadUsers@showForm')->name('new');
+
+Route::post('new', 'UploadUsers@store')->name('new');
+
+Route::get('/user/{user}/edit', 'UserController@show_edit')->name('edit');
+
+Route::post('/user/{user}/edit', 'UserController@update')->name('update');
+
+Route::post('/users/{id}', 'UserController@destroy')->name('delete');
+
+Route::get('/profile/{user}', 'ProfileController@showProfile')->name('profile');
 
 Auth::routes();
 
