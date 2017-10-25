@@ -46,12 +46,14 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li class="home-icon"><a href="/"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
+                        <li class="home-icon"><a href="/"><span class="fa fa-mortar-board" aria-hidden="true"></span></a></li>
                         <li><a @yield('home') href="/">Головна</a></li>
                         @auth
-                            <!-- <li><a @yield ('profile') href="{{ url('/profile/' . Auth::user()->id ) }}">Моя сторінка</a></li> -->
+                        <!-- <li><a @yield ('profile') href="{{ url('/profile/' . Auth::user()->id ) }}">Моя сторінка</a></li> -->
                             @role('admin')
-                            <li><a href="/users">Показати користувачів</a></li>
+                            <li><a @yield('users') href="/users">Користувачі</a></li>
+                            <li><a @yield('groups') href="/groups">Групи</a></li>
+                            <li><a @yield('disciplines') href="/disciplines">Спеціальності</a></li>
                             @endrole
                             @role('student')
                                 @if(Auth::user()->group != NULL)
@@ -89,11 +91,9 @@
                             @endrole
                         @endauth
                         <li><a @yield('about') href="/about">Про сайт</a></li>
-<!--                         <li><a @yield('gallery') href="/gallery">Gallery</a></li>
-                        <li><a @yield('contact') href="/contact">Contact</a></li> -->
                         @if (!Auth::check())
                         <li style="margin-left: 62% !important;" class="login w3">
-                            <div id="loginContainer"><a style="padding: 0;" href="#" id="loginButton"><span style="padding: 1.5em;">Login</span></a>
+                            <div id="loginContainer"><a style="padding: 0;" href="#" id="loginButton"><span style="padding: 1.5em;"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</span></a>
                                 <div id="loginBox">
                                     <form id="loginForm" action="{{route('login')}}" method="post">
                                         {{ csrf_field() }}
@@ -109,7 +109,7 @@
                                             </fieldset>
                                             <fieldset>
                                                 <label for="password">Password</label>
-                                                <input type="password" name="password" id="password" required="">
+                                                <input type="password" name="password" id="password">
                                                 @if ($errors->has('password'))
                                                     <span class="help-block">
                                                     <strong>{{ $errors->first('password') }}</strong>
@@ -141,11 +141,11 @@
                                 {{--</div>--}}
 
                             {{--</li>--}}
-                            <li style="font-size: 16px; color: #fff; margin-left: 17% !important;" class="dropdown w3-agile login w3"> <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+                            <li @yield('profile') style="font-size: 16px; margin-left: 17% !important;" class="dropdown w3-agile login w3"> <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
                                     {{Auth::user()->name}} {{Auth::user()->lastname}}
                                     <span class="fa fa-cog dropdown-toggle" ><span class="caret"></span></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a @yield ('profile') href="{{ url('/profile/' . Auth::user()->id ) }}"><i class="fa fa-user" aria-hidden="true"> Моя сторінка</i></a></li>
+                                    <li><a @yield ('profile') href="{{ url('/profile/' . Auth::user()->id ) }}" style="font-size: 16px"><i class="fa fa-user" aria-hidden="true"> Моя сторінка</i></a></li>
                                     <!-- <li><a href="/add_article"><i class="fa fa-user" aria-hidden="true"> Add article</i></a></li> -->
                                     <!-- <li><a href="#">Edit profile</a></li> -->
                                     <li role="separator" class="divider w3-agile"></li>

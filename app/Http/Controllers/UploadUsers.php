@@ -11,7 +11,7 @@ class UploadUsers extends Controller
 {
     public function showForm(Group $group) {
         $groups = Group::all();
-    	return view('register_user')->with(['groups' => $groups]);;
+    	return view('register_user')->with(['groups' => $groups]);
     }
 
     protected function validator(array $data)
@@ -22,11 +22,12 @@ class UploadUsers extends Controller
             'surname' => 'required|string|max:255',
             'login' => 'required|string|max:255|unique:users',
             'email' => 'required|string|email|max:255',
+            'group_id' => 'required|unsignedInt|group_id|max:255',
+            'birthday' => 'required|string|birthday|max:255',
+            'note' => 'required|string|note|max:255',
             'password' => 'required|string|min:6|confirmed',
         ]);
     }
-
-
 
     public function store(Request $request) {
     	//get file
@@ -35,28 +36,24 @@ class UploadUsers extends Controller
             $filePath = $upload->getRealPath();
             //read
             $file = file_get_contents($filePath);
-            
             $rows = explode("\r".PHP_EOL, $file);
-
             foreach ($rows as $key => $value) {
                 $row = explode(';', $value);
                 // dd($row);
                 if($key > 0) {
                     if (count($row) < 5) {
                         continue;
-                    } 
-                    
-                        $all['email'] = $row[4];
-                        $all['lastname'] = $row[1];
-                        $all['name'] = $row[2];
-                        $all['surname'] = $row[3];
-                        $all['login'] = $row[6];
-
-                        $all['password'] = bcrypt($row[5]);
-                        // Role::create($role_id);
-                        $user = User::create($all);
-                        $user->assignRole($request->input('role'));
                     }
+                    $all['email'] = $row[4];
+                    $all['lastname'] = $row[1];
+                    $all['name'] = $row[2];
+                    $all['surname'] = $row[3];
+                    $all['login'] = $row[6];
+                    $all['password'] = bcrypt($row[5]);
+                    // Role::create($role_id);
+                    $user = User::create($all);
+                    $user->assignRole($request->input('role'));
+                }
             }
         }
         else {
@@ -65,14 +62,22 @@ class UploadUsers extends Controller
             $data['surname'] = $request->input('surname');
             $data['login'] = $request->input('login');
             $data['email'] = $request->input('email');
+            $group_id = Group::where('group_number', $request->input('group_number'))->first();
+            if($group_id != NULL) {
+                $data['group_id'] = $group_id->id;     
+            }
+            if($request->input('stud_number') != NULL) {
+                $data['stud_number'] = $request->input('stud_number');    
+            }
+            $data['birthday'] = $request->input('birthday');
+            if($request->input('note') != NULL) {
+                $data['note'] = $request->input('note');
+            }
             $data['password'] = bcrypt($request->input('password'));
-
             $user = User::create($data);
             // $role = Role::create(['name' => 'student']);
-
             $user->assignRole($request->input('role'));
         }
-
         return redirect()->back();
     	//validate
     }

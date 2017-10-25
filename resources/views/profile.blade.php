@@ -1,5 +1,7 @@
 @extends('blocks.layout')
 
+@section('profile') class="active" @endsection
+
 @section('content')
 
 
@@ -9,7 +11,36 @@
         <div class="col-md-7 " >
 
             <div class="panel panel-default">
-                <div class="panel-heading" style="background-color: #10c7bf; color: #fff">  <h4 >User Profile</h4></div>
+                <div class="panel-heading" style="background-color: #10c7bf; color: #fff">  
+
+                    <div class="fb fb__1" style="display: flex; justify-content: space-between;">
+                      <div class="fb fb__1_2">
+                        <h4 >User Profile</h4>
+                      </div>
+                      <div class="fb fb__1_3">
+                        <!-- 1 -->
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></a>  
+                        <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+                              <span class="fa fa-cog dropdown-toggle" style="color: #fff"></span>
+                            </a>
+                        <ul class="dropdown-menu" style="top: auto; left: auto;">
+                            <li><a href="{{ route('edit', $user->id) }}"><i class="fa fa-pencil" aria-hidden="true" style="font-size: 16px"> Редагувати користувача</i></a></li>
+                            @role('admin')
+                            <li> 
+                                <form id="loginForm" action="{{ route('delete', $user->id) }}" method="post">
+                                   {{ csrf_field() }}
+                                  <input style="font-size: 14px" type="submit" id="login" value="Видалити користувача">
+                                </form>
+                            </li>
+                            @endrole
+
+                      </div>
+                    </div>
+
+
+            
+
+                </div>
                 <div class="panel-body">
 
                     <div class="box box-info">
@@ -49,15 +80,11 @@
                             <div class="col-sm-5 col-xs-6 tital " >По-батькові:</div><div class="col-sm-7">{{$user->surname}}</div>
                             
                             @if($user->group != NULL)
+                            @foreach($user->group->disciplines as $discipline)
                             <div class="clearfix"></div>
                             <div class="bot-border"></div>
-
-                            <div class="col-sm-5 col-xs-6 tital " >Навчальні дисципліни:</div><div class="col-sm-7">{{$user->group->disciplines[0]->discipline_title}}</div>                           
-
-                            <div class="clearfix"></div>
-                            <div class="bot-border"></div>
-
-                            <div class="col-sm-5 col-xs-6 tital " >Оцінки:</div><div class="col-sm-7">{{$user->mark[0]->mark}}</div>  
+                            <div class="col-sm-5 col-xs-6 tital " >Навчальні дисципліни:</div><div class="col-sm-7">{{$discipline->discipline_title}}</div>
+                            @endforeach                           
 
                                 <div class="clearfix"></div>
                                 <div class="bot-border"></div>
@@ -83,17 +110,12 @@
                             <!-- /.box-body -->
                         </div>
                         <!-- /.box -->
-
                     </div>
-
-
-
                 </div>
             </div>
         </div>
 
         
-
 
 
         <script

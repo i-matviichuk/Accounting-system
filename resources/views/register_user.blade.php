@@ -1,11 +1,13 @@
 @extends('blocks.layout')
 
+@section('users') class="active" @endsection
+
 @section('content')
 <div class="container" style="padding-top: 5%; padding-bottom: 5%">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Register</div>
+                <div class="panel-heading">Реєстрація</div>
 
                 <div class="panel-body">
                     <div style="margin-bottom: 5%;">
@@ -107,6 +109,68 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('group_number') ? ' has-error' : '' }}">
+                            <label for="group_number" class="col-md-4 control-label">Номер групи (нн_рррр)</label>
+                    
+                            <div class="col-md-6">
+                                <p><select class="form-control"  name="group_number">
+                                        <option>Група..</option>
+                                        @foreach($groups as $group)
+                                            <option>{{$group->group_number}}</option>
+                                        @endforeach
+                                    </select></p>
+                                {{--<input id="group_number" type="text" class="form-control" name="group_number">--}}
+
+                                @if ($errors->has('group_number'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('group_number') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('stud_number') ? ' has-error' : '' }}">
+                            <label for="stud_number" class="col-md-4 control-label">Студентський</label>
+                    
+                            <div class="col-md-6">
+                                <input id="stud_number" type="text" class="form-control" name="stud_number">
+
+                                @if ($errors->has('stud_number'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('stud_number') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('birthday') ? ' has-error' : '' }}">
+                            <label for="birthday" class="col-md-4 control-label">День народження</label>
+                    
+                            <div class="col-md-6">
+                                <input id="birthday" type="text" class="form-control" name="birthday" placeholder="2000-12-31" required>
+
+                                @if ($errors->has('birthday'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('birthday') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('note') ? ' has-error' : '' }}">
+                            <label for="note" class="col-md-4 control-label">Нотатка</label>
+                    
+                            <div class="col-md-6">
+                                <input id="note" type="text" class="form-control" name="note">
+
+                                @if ($errors->has('note'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('note') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                                
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="password" class="col-md-4 control-label">Password</label>
 
@@ -144,8 +208,8 @@
                     <form id="form2" style="display: none" action="{{url('/new')}}" method="post" enctype="multipart/form-data">
                                 {{csrf_field()}}
                                    <div class="form-group">
-                                        <label for="upload-file">Upload</label>
-                                        <input type="file" name="upload-file" class="form-control"></input><br>
+                                        <label for="upload-file">Завантажити</label>
+                                        <input type="file" name="upload-file" class="form-control" /><br>
                                         <div>Вкажіть роль користувача</div>
                                         <input type="radio" name="role" value="student" checked="checked">  Студент</input><br>
                                         <input type="radio" name="role" value="operator">  Оператор</input><br>

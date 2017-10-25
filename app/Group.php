@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Group extends Model
 {
+    protected $fillable = [
+        'group_number', 'profession_id', 'curator_id',
+    ];
+
 	public function curator() 
 	{
     	return $this->hasOne('App\User', 'id', 'curator_id');

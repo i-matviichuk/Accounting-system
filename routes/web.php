@@ -28,6 +28,16 @@ Route::group( ['middleware' => ['auth']], function() {
 
 Route::get('/users', 'UserController@show')->middleware('role:admin');
 
+Route::get('/groups', 'GroupController@showGroups')->name('showGroups')->middleware('role:admin');
+
+Route::get('/group/{group}', 'GroupController@showGroupProfile')->name('showGroupProfile')->middleware('role:admin, operator, teacher');
+
+Route::get('/groups/add', 'GroupController@showForm')->middleware('role:admin');
+
+Route::post('/groups/add', 'GroupController@addGroup')->name('addGroup')->middleware('role:admin');
+
+Route::post('/groups/{id}', 'GroupController@deleteGroup')->name('deleteGroup')->middleware('role:admin');
+
 Route::get('new', 'RegisterUser@show')->middleware('role:admin');
 
 Route::get('/marks/{discipline}', 'MarkController@index')->name('marks');
@@ -36,9 +46,9 @@ Route::get('/', 'UserController@index');
 
 Route::get('/admin', 'AdminController@showProfile')->middleware('role:admin');
 
-Route::get('new', 'UploadUsers@showForm')->name('new');
+Route::get('new', 'UploadUsers@showForm')->name('new')->middleware('role:admin');
 
-Route::post('new', 'UploadUsers@store')->name('new');
+Route::post('new', 'UploadUsers@store')->name('new')->middleware('role:admin');
 
 Route::get('/user/{user}/edit', 'UserController@show_edit')->name('edit');
 

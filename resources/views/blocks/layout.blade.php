@@ -36,6 +36,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <script src="{{ asset('assets/js/menu_jquery.js') }}"></script> <!-- pop-up -->
     <style>
         @yield('css')
+
+        body{
+            font-family: 'PT Sans', Helvetica, Arial, sans-serif;
+        }
+
     </style>
     <!-- //js -->
 </head>

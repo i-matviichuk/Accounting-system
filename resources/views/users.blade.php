@@ -1,9 +1,11 @@
 @extends('blocks.layout')
 
+@section('users') class="active" @endsection
+
 @section('content')
 
 @role('admin')
-<div class="container" style="padding-top: 5%; padding-bottom: 8%; width: 70%">
+<div class="container" style="padding-top: 5%; padding-bottom: 8%; width: 80%">
 <div id="demo">
   <h1 style="float: left;"><i class="fa fa-users" aria-hidden="true"></i> Users</h1>
   <a style="float: right;" href="/new"><i class="fa fa-user-plus" aria-hidden="true"></i> Add new user</a>
@@ -22,7 +24,7 @@
      /* text-align: center;*/
     }
 
-    #myInput0, #myInput1, #myInput2, #myInput3, #myInput4, #myInput5, #myInput6, #myInput7 {
+    #myInput0, #myInput1, #myInput2, #myInput3, #myInput4, #myInput5, #myInput6, #myInput7, #myInput8 {
     background-image: url('/css/searchicon.png');
     width: 100%;
     font-size: 14px;
@@ -36,22 +38,27 @@
   <table id="grid" class="table table-hover table-mc-light-blue">
       <thead>
         <tr>
-          <th data-type="number"><input type="text" id="myInput0" style="color: black" onkeyup="myFunction()" placeholder="Search for id.." title="Type in a name"> ID </th>
-          <th data-type="string" style="width: 25%"><input type="text" id="myInput1" style="color: black" onkeyup="myFunction1()" placeholder="Search for names.." title="Type in a name">Ім'я</th>
-          <th data-type="string"><input type="text" id="myInput2" style="color: black" onkeyup="myFunction2()" placeholder="Search for names.." title="Type in a name">Login</th>
-          <th data-type="string"><input type="text" id="myInput3" style="color: black" onkeyup="myFunction3()" placeholder="Search for names.." title="Type in a name">E-mail</th>
-          <th data-type="string"><input type="text" id="myInput4" style="color: black" onkeyup="myFunction4()" placeholder="Search for names.." title="Type in a name">Група</th>
-          <th data-type="string"><input type="text" id="myInput5" style="color: black" onkeyup="myFunction5()" placeholder="Search for names.." title="Type in a name">Студентський</th>
-          <th data-type="string" style="width: 11%"><input type="text" id="myInput6" style="color: black" onkeyup="myFunction6()" placeholder="Search for names.." title="Type in a name">День народж.</th>
-          <th style="width: 14%"><input type="text" id="myInput7" style="color: black" onkeyup="myFunction7()" placeholder="Search for names.." title="Type in a name">Нотатка</th>
+          <th data-type="number"><input type="text" id="myInput0" style="color: black" onkeyup="myFunction()" placeholder="Пошук по ID.." title="Введіть ID"> ID </th>
+          <th data-type="string" style="width: 22%"><input type="text" id="myInput1" style="color: black" onkeyup="myFunction1()" placeholder="Пошук по ПІБ.." title="Введіть ім'я">Ім'я</th>
+          <th data-type="string"><input type="text" id="myInput2" style="color: black" onkeyup="myFunction2()" placeholder="Пошук по ролях.." title="Введіть роль">Роль</th>
+          <th data-type="string"><input type="text" id="myInput3" style="color: black" onkeyup="myFunction3()" placeholder="Пошук по логіну.." title="Введіть логін">Login</th>
+          <th data-type="string"><input type="text" id="myInput4" style="color: black" onkeyup="myFunction4()" placeholder="Пошук по E-mail.." title="Введіть E-mail">E-mail</th>
+          <th data-type="string"><input type="text" id="myInput5" style="color: black" onkeyup="myFunction5()" placeholder="Пошук по групах.." title="Введіть гомер групи">Група</th>
+          <th data-type="string"><input type="text" id="myInput6" style="color: black" onkeyup="myFunction6()" placeholder="Пошук по студентському.." title="Введіть номер студентського">Студентський</th>
+          <th data-type="string" style="width: 12%"><input type="text" id="myInput7" style="color: black" onkeyup="myFunction7()" placeholder="Пошук по даті народження.." title="Введіть дату народження">День народження</th>
+          <th style="width: 14%"><input type="text" id="myInput8" style="color: black" onkeyup="myFunction8()" placeholder="Пошук по нотатках.." title="Введіть нотатку">Нотатка</th>
         </tr>
       </thead>
       <tbody>
 
         @foreach($users as $user)
+        @foreach($user->roles as $role)
         <tr>
           <td>{{$user->id}}</td>
           <td>{{$user->lastname}} {{$user->name}} {{$user->surname}}</td>
+          
+          <td>{{$role->name}}</td>
+          
           <td>{{$user->login}}</td>
           <td>{{$user->email}}</td>
           @if($user->group != NULL)
@@ -65,20 +72,20 @@
             <td></td>
           @endif
           @if($user->birthday != NULL)
-          <td>{{$user->birthday->format('d-m-Y')}}</td>
+          <td>{{$user->birthday->format('d.m.Y')}}</td>
           @else
           <td></td>
           @endif
           <td>{{str_limit($user->note, 15)}}</td>
           <td class="dropdown w3-agile">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></a>  
               <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
                   <span class="fa fa-cog dropdown-toggle" ></span>
                 </a>
             <ul class="dropdown-menu" style="top: auto;">
-                <li><a href="{{ route('profile', $user->id) }}"><i class="fa fa-user" aria-hidden="true"> Профіль користувача</i></a></li>
+                <li><a href="{{ route('profile', $user->id) }}"><i class="fa fa-user" aria-hidden="true" style="font-size: 16px"> Профіль користувача</i></a></li>
                 <li><a href="{{ route('edit', $user->id) }}"><i class="fa fa-pencil" aria-hidden="true" style="font-size: 16px"> Редагувати користувача</i></a></li>
-                <li> 
+              <li> 
                 <form id="loginForm" action="{{ route('delete', $user->id) }}" method="post">
                    {{ csrf_field() }}
                   <input style="font-size: 14px" type="submit" id="login" value="Видалити користувача">
@@ -88,7 +95,7 @@
           </td>
         </tr>
         @endforeach
-       
+       @endforeach
       </tbody>
     </table>
   </div>
@@ -104,6 +111,7 @@
       // Если TH -- сортируем
       sortGrid(e.target.cellIndex, e.target.getAttribute('data-type'));
     };
+
     function sortGrid(colNum, type) {
       var tbody = grid.getElementsByTagName('tbody')[0];
       // Составить массив из TR
@@ -271,6 +279,24 @@
   tr = table.getElementsByTagName("tr");
   for (i = 0; i < tr.length; i++) {
     td = tr[i].getElementsByTagName("td")[7];
+    if (td) {
+      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+
+  function myFunction8() {
+  var input, filter, table, tr, td, i;
+  input = document.getElementById("myInput8");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("grid");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[8];
     if (td) {
       if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
         tr[i].style.display = "";

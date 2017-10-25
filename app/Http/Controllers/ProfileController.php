@@ -9,7 +9,7 @@ class ProfileController extends Controller
 {
     public function showProfile (User $user) {
      	if(auth()->check()) {
-     		if(auth()->user()->id == $user->id || $user->role('admin')) {
+     		if(auth()->user()->id == $user->id || auth()->user()->roles[0]->name == "admin") {
      			return view('profile', ['user' => $user]);
      		} 
         	else {
@@ -17,7 +17,7 @@ class ProfileController extends Controller
         	}
    		}
    		else {
-   			return redirect('/login');
+   			return redirect('/');
    		}
     }
 }
