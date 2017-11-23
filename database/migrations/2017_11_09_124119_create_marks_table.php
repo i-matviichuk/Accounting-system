@@ -22,6 +22,8 @@ class CreateMarksTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedInteger('discipline_id');
             $table->foreign('discipline_id')->references('id')->on('academic_disciplines');
+            $table->unsignedInteger('role_id');
+            $table->foreign('role_id')->references('id')->on('marks_roles');
             $table->timestamps();
         });
     }

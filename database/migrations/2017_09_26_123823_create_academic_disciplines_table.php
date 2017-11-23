@@ -16,8 +16,11 @@ class CreateAcademicDisciplinesTable extends Migration
         Schema::create('academic_disciplines', function (Blueprint $table) {
             $table->increments('id');
             $table->string('discipline_title');
+            $table->unsignedInteger('group_id');
             $table->unsignedInteger('teacher_id');
+            $table->unsignedInteger('hours');
             $table->foreign('teacher_id')->references('id')->on('users');
+            $table->foreign('group_id')->references('id')->on('groups');
             $table->timestamps();
         });
     }

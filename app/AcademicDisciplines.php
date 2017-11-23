@@ -6,7 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class AcademicDisciplines extends Model
 {
-	public function group_discipline() {
-    	return $this->belongsToMany('App\Group', 'disciplines_groups', 'discipline_id', 'group_id')->withPivot('hours');
-	}
+    protected $fillable = [
+        'group_id', 'name', 'teacher_id', 'discipline_title', 'hours',
+    ];
+
+    public function teacher()
+    {
+        return $this->hasOne(User::class, 'id', 'teacher_id');
+    }
+
+    public function group()
+    {
+        return $this->hasOne(Group::class, 'id', 'group_id');
+    }
 }
+

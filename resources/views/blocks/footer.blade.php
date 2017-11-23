@@ -26,7 +26,7 @@
                 </div>
                 <div class="copyright">
                     <p>© 2017 Accounting System .  All rights reserved | Design by <a href="http://w3layouts.com/">W3layouts</a></p>
-                    <p>Created for VoCNUFT by <a href="https://www.facebook.com/profile.php?id=100006120152942&ref=bookmarks">Illia Matviichuk</a></p>
+                    <p>Created for VoCNUFT by Illia Matviichuk</p>
                 </div>
             </div>
             <div class="clearfix"> </div>   

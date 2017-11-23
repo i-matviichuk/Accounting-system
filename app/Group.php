@@ -10,7 +10,7 @@ class Group extends Model
         'group_number', 'profession_id', 'curator_id',
     ];
 
-	public function curator() 
+	public function curator()
 	{
     	return $this->hasOne('App\User', 'id', 'curator_id');
 	}
@@ -20,15 +20,14 @@ class Group extends Model
 		return $this->hasOne('App\Professions', 'id', 'profession_id');
 	}
 
-	public function disciplines() 
-	{
-		return $this->belongsToMany('App\AcademicDisciplines', 'disciplines_groups', 'group_id', 'discipline_id')->withPivot('hours');
-	}
+    public function disciplines()
+    {
+        return $this->hasMany(AcademicDisciplines::class, 'group_id', 'id');
+    }
 
-	public function attachDiscipline($discipline_id)
-	{
-		$this->disciplines()->attach($discipline_id);
-		return $this;
-	}
-
+//	public function attachDiscipline($discipline_id)
+//	{
+//		$this->disciplines()->attach($discipline_id);
+//		return $this;
+//	}
 }

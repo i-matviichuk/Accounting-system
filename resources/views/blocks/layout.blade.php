@@ -15,7 +15,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     <!-- Custom Theme files -->
     <link href="{{ asset('assets/css/bootstrap.css') }}" rel='stylesheet' type='text/css' />
+    <link href="{{ asset('assets/css/bootstrap.css') }}" rel='stylesheet' type='text/css' />
     <link href="{{ asset('assets/css/style.css') }}" rel='stylesheet' type='text/css' />
+    {{--<link href="{{ asset('assets/sass/app.css') }}" rel='stylesheet' type='text/css' />--}}
     <link href="{{ asset('assets/css/font-awesome.css') }}" rel="stylesheet"> 			<!-- font-awesome icons -->
     <!-- //Custom Theme files -->
     <!-- fonts -->
@@ -56,6 +58,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!-- smooth-scrolling-of-move-up -->
 <script type="text/javascript" src="{{asset('assets/js/move-top.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/js/easing.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/js/my_scripts.js')}}"></script>
+{{--<script type="text/javascript" src="{{asset('assets/js/easing.js')}}"></script>--}}
 <script type="text/javascript">
     $(document).ready(function() {
         /*

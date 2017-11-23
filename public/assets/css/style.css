@@ -814,13 +814,15 @@ ul#flexiselDemo1 li a h4:hover{
     margin-bottom: 3em;
 }
 .date{
-    background: #2B2B2B;
+    background: #FFF;
     width: 125px;
     height: 125px;
-    border-radius: 50%;
+    margin: 1%;
+    border: 1px solid #999;
+    border-radius: 15%;
 }
 .date p{
-    color: #FFF;
+    color: #999;
     font-size: 3em;
     text-align: center;
     margin: 0;
@@ -829,7 +831,7 @@ ul#flexiselDemo1 li a h4:hover{
 .date span{
     display: block;
     line-height: 0.6em;
-    color: #FFF;
+    color: #999;
     font-size: 1em;
     text-align: center;
     text-transform: uppercase;
@@ -1164,7 +1166,7 @@ li.list-group-item1 {
     font-weight: bold;
 }
 .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
-	border-top: none !important;
+	/*border-top: none !important;*/
 }
 .tab-content > .active {
 	display: block;
@@ -1210,7 +1212,7 @@ section#tables  p {
 .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
 	font-size: 0.9em;
 	color: #999;
-	border-top: none !important;
+	/*border-top: none !important;*/
 }
 .tab-content > .active {
 	display: block;
@@ -2988,7 +2990,211 @@ fieldset#body {
 input:focus {
     outline:none;
 }
+/*test*/
+th {
+    cursor: pointer;
+    /*text-align: center;*/
+}
 
-#form2 {
-  visibility: none;
+th:hover {
+    background: #00C8BE;
+    color: #FFFFFF !important;
+    /* text-align: center;*/
+}
+
+#myInput0, #myInput1, #myInput2, #myInput3, #myInput4, #myInput5, #myInput6, #myInput7, #myInput8 {
+    width: 100%;
+    font-size: 14px;
+    padding: 5px 5px 5px 10px;
+    border: 1px solid #ddd;
+    margin-bottom: 12px;
+}
+
+/*.badge {*/
+    /*background-color: #777;*/
+/*}*/
+/*.tabs-left {*/
+    /*margin-top: 3rem;*/
+/*}*/
+.nav-tabs {
+    float: left;
+    border-bottom: 0;
+}
+.nav-tabs li {
+    float: none;
+    margin: 0;
+}
+.nav-tabs li a {
+    margin-right: 0;
+    /*border: 0;*/
+    /*background-color: #333;*/
+    border-color: #ddd #ddd #ddd;
+    border-top-color: transparent;
+    border-left-color: transparent;
+    border-bottom-color: transparent;
+    border-radius: 4px 0 0 4px;
+}
+.nav-tabs li a:hover {
+    border-bottom-color: transparent;
+}
+
+.nav-tabs li.active a {
+    border-right-color: transparent;
+    border-bottom-color: #ddd;
+}
+.nav-tabs li.active a:hover {
+    border-right-color: transparent;
+    border-bottom-color: #eee;
+}
+.nav-tabs li.active a:focus {
+    border-right-color: transparent;
+    border-bottom-color: #eee;
+}
+/*.nav-tabs li a:hover {*/
+    /*background-color: #444;*/
+/*}*/
+/*.nav-tabs .glyphicon {*/
+    /*color: #fff;*/
+/*}*/
+/*.nav-tabs .active .glyphicon {*/
+    /*color: #10c7bf;*/
+/*}*/
+
+
+/*.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {*/
+    /*border: 0;*/
+/*}*/
+.tab-content {
+    margin-left: 45px;
+    position: relative;
+}
+.tab-content .tab-pane {
+    display: none;
+    /*background-color: #fff;*/
+    /*padding: 1.6rem;*/
+    overflow-y: auto;
+}
+.tab-content .active {
+    display: block;
+}
+.subject-table {
+    overflow: scroll;
+}
+
+.table thead tr th {
+    border-bottom: 0;
+}
+
+.center-text {
+    text-align: center;
+}
+
+.subject-table .name {
+    position: absolute;
+    left: 250px;
+    background-color: #e7e7e7;
+    width: 260px;
+}
+
+.subject-table .number {
+    background-color: #e7e7e7;
+    position: absolute;
+    width: 70px;
+}
+
+.vertical-text {
+    transform: rotate(270deg);
+}
+
+.rotate-line {
+    background: #999;
+    width: 20px;
+    height: 1px;
+    transform: rotate(135deg);
+}
+
+table tr {
+    counter-increment: id;
+}
+table tr td:first-child::before {
+    content: counter(id);
+}
+
+.mark-five {
+    color: #FFFFFF;
+    background-color: #56a921;
+}
+
+.mark-five p {
+    color: #FFFFFF;
+    background-color: #56a921;
+}
+
+.mark-five span {
+    color: #FFFFFF;
+    background-color: #56a921;
+}
+
+.mark-four {
+    color: #FFFFFF;
+    background-color: #8dd220;
+}
+
+.mark-four p {
+    color: #FFFFFF;
+    background-color: #8dd220;
+}
+
+.mark-four span {
+    color: #FFFFFF;
+    background-color: #8dd220;
+}
+
+.mark-three {
+    color: #FFFFFF;
+    background-color: #dbde22;
+}
+
+.mark-three p {
+    color: #FFFFFF;
+    background-color: #dbde22;
+}
+
+.mark-three span {
+     color: #FFFFFF;
+     background-color: #dbde22;
+ }
+
+.mark-two {
+    color: #FFFFFF;
+    background-color: #de9b06;
+}
+
+.mark-two p{
+    color: #FFFFFF;
+    background-color: #de9b06;
+}
+
+.mark-two span {
+    color: #FFFFFF;
+    background-color: #de9b06;
+}
+
+.mark-one {
+    color: #FFFFFF;
+    background-color: #de0606;
+}
+.mark-one p {
+    color: #FFFFFF;
+    background-color: #de0606;
+}
+.mark-one span {
+    color: #FFFFFF;
+    background-color: #de0606;
+}
+
+.front-page p {
+    margin: 5%;
+    text-indent: 20px;
+    font-size: 1.2em;
 }

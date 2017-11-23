@@ -26,29 +26,37 @@ Route::group( ['middleware' => ['auth']], function() {
     // Route::resource('posts', 'PostController');
 });
 
-Route::get('/users', 'UserController@show')->middleware('role:admin');
+Route::get('/users', 'UserController@show');
 
-Route::get('/groups', 'GroupController@showGroups')->name('showGroups')->middleware('role:admin');
+Route::get('/groups', 'GroupController@showGroups')->name('showGroups');
 
-Route::get('/group/{group}', 'GroupController@showGroupProfile')->name('showGroupProfile')->middleware('role:admin, operator, teacher');
+Route::get('/group/{group}', 'GroupController@showGroupProfile')->name('showGroupProfile');
 
-Route::get('/groups/add', 'GroupController@showForm')->middleware('role:admin');
+Route::get('/group/{group}/edit', 'GroupController@showEdit')->name('showEdit');
 
-Route::post('/groups/add', 'GroupController@addGroup')->name('addGroup')->middleware('role:admin');
+Route::post('/group/{group}/edit', 'GroupController@updateGroup')->name('updateGroup');
+
+Route::get('/groups/add', 'GroupController@showForm');
+
+Route::post('/groups/add', 'GroupController@addGroup')->name('addGroup');
 
 Route::post('/groups/{id}', 'GroupController@deleteGroup')->name('deleteGroup')->middleware('role:admin');
 
 Route::get('new', 'RegisterUser@show')->middleware('role:admin');
 
-Route::get('/marks/{discipline}', 'MarkController@index')->name('marks');
+Route::get('/user/{user}/marks', 'MarkController@index')->name('marks');
+
+Route::get('/group/{group}/add/mark', 'MarkController@showForm')->name('showAddMark');
+
+Route::post('/group/{group}/add/mark', 'MarkController@addMark')->name('addMark');
 
 Route::get('/', 'UserController@index');
 
-Route::get('/admin', 'AdminController@showProfile')->middleware('role:admin');
+Route::get('/admin', 'AdminController@showProfile');
 
-Route::get('new', 'UploadUsers@showForm')->name('new')->middleware('role:admin');
+Route::get('new', 'UploadUsers@showForm')->name('new');
 
-Route::post('new', 'UploadUsers@store')->name('new')->middleware('role:admin');
+Route::post('new', 'UploadUsers@store')->name('new');
 
 Route::get('/user/{user}/edit', 'UserController@show_edit')->name('edit');
 
@@ -57,6 +65,20 @@ Route::post('/user/{user}/edit', 'UserController@update')->name('update');
 Route::post('/users/{id}', 'UserController@destroy')->name('delete');
 
 Route::get('/profile/{user}', 'ProfileController@showProfile')->name('profile');
+
+Route::get('/professions', 'ProfessionsController@show')->name('showProfessions');
+
+Route::get('/professions/add', 'ProfessionsController@showAdd')->name('showAddProfession');
+
+Route::post('/professions/add', 'ProfessionsController@addProfession')->name('addProfession');
+
+Route::get('/professions/{profession}/edit', 'ProfessionsController@showEdit')->name('editProfession');
+
+Route::post('/professions/{profession}/edit', 'ProfessionsController@updateProfession')->name('updateProfession');
+
+Route::get('/group/{group}/add/discipline', 'DisciplineController@showForm')->name('showDiscipline');
+
+Route::post('/group/{group}/add/discipline', 'DisciplineController@addDiscipline')->name('addDiscipline');
 
 Auth::routes();
 

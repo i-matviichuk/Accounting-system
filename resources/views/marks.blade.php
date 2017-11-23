@@ -2,180 +2,102 @@
 
 @section('content')
 
-<div class="container" style="padding: 5%">
-  
-<div id="demo">
-@role('student')
-  <h1>{{$discipline->discipline_title}}</h1>
-  <!-- <h2>Table of my other Material Design works (list was updated 08.2015)</h2> -->
-  
-  <!-- Responsive table starts here -->
-  <!-- For correct display on small screens you must add 'data-title' to each 'td' in your table -->
-  <div class="table-responsive-vertical shadow-z-1">
-  <!-- Table starts here -->
-<!--   <table id="table" class="table table-hover table-mc-light-blue">
-      <thead>
-        <tr>
-          <th>Номер</th>
-          <th>Дата</th>
-          <th>Оцінка</th>
-          <th>Коментар</th>
-        </tr>
-      </thead>
-      <tbody>
-        @foreach($marks as $mark)
-        <tr>
-          <td data-title="ID">1</td>
-          <td data-title="Name">Material Design Color Palette</td>
-          <td data-title="Link">
-            <a></a>
-          </td>
-          <td data-title="Status">Completed</td>
-        </tr>
-        @endforeach
-        <tr>
-          <td data-title="ID">2</td>
-          <td data-title="Name">Material Design Iconic Font</td>
-          <td data-title="Link">
-            <a href="https://codepen.io/zavoloklom/pen/uqCsB" target="_blank">Codepen</a>
-            <a href="https://github.com/zavoloklom/material-design-iconic-font" target="_blank">GitHub</a>
-          </td>
-          <td data-title="Status">Completed</td>
-        </tr>
-        <tr>
-          <td data-title="ID">3</td>
-          <td data-title="Name">Material Design Hierarchical Display</td>
-          <td data-title="Link">
-            <a href="https://codepen.io/zavoloklom/pen/eNaEBM" target="_blank">Codepen</a>
-            <a href="https://github.com/zavoloklom/material-design-hierarchical-display" target="_blank">GitHub</a>
-          </td>
-          <td data-title="Status">Completed</td>
-        </tr>
-        <tr>
-          <td data-title="ID">4</td>
-          <td data-title="Name">Material Design Sidebar</td>
-          <td data-title="Link"><a href="https://codepen.io/zavoloklom/pen/dIgco" target="_blank">Codepen</a></td>
-          <td data-title="Status">Completed</td>
-        </tr>
-        <tr>
-          <td data-title="ID">5</td>
-          <td data-title="Name">Material Design Tiles</td>
-          <td data-title="Link">
-            <a href="https://codepen.io/zavoloklom/pen/wtApI" target="_blank">Codepen</a>
-          </td>
-          <td data-title="Status">Completed</td>
-        </tr>
-        <tr>
-          <td data-title="ID">6</td>
-          <td data-title="Name">Material Design Typography</td>
-          <td data-title="Link">
-            <a href="https://codepen.io/zavoloklom/pen/IkaFL" target="_blank">Codepen</a>
-            <a href="https://github.com/zavoloklom/material-design-typography" target="_blank">GitHub</a>
-          </td>
-          <td data-title="Status">Completed</td>
-        </tr>
-        <tr>
-          <td data-title="ID">7</td>
-          <td data-title="Name">Material Design Buttons</td>
-          <td data-title="Link">
-            <a href="https://codepen.io/zavoloklom/pen/Gubja" target="_blank">Codepen</a>
-          </td>
-          <td data-title="Status">In progress</td>
-        </tr>
-        <tr>
-          <td data-title="ID">8</td>
-          <td data-title="Name">Material Design Form Elements</td>
-          <td data-title="Link">
-            <a href="https://codepen.io/zavoloklom/pen/yaozl" target="_blank">Codepen</a>
-          </td>
-          <td data-title="Status">In progress</td>
-        </tr>
-        <tr>
-          <td data-title="ID">9</td>
-          <td data-title="Name">Material Design Email Template</td>
-          <td data-title="Link">
-            <a href="https://codepen.io/zavoloklom/pen/qEVqzx" target="_blank">Codepen</a>
-          </td>
-          <td data-title="Status">Completed</td>
-        </tr>
-        <tr>
-          <td data-title="ID">10</td>
-          <td data-title="Name">Material Design Animation Timing (old one)</td>
-          <td data-title="Link">
-            <a href="https://codepen.io/zavoloklom/pen/Jbrho" target="_blank">Codepen</a>
-          </td>
-          <td data-title="Status">Completed</td>
-        </tr>
-      </tbody>
-    </table> -->
-    <table id="table" class="table table-hover table-mc-light-blue">
-      <thead>
-        <tr>
-          @foreach($marks as $mark)
-            <th>{{$mark->date}}</th>
-          @endforeach
-          <th>Середній бал</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          @foreach($marks as $mark)
-          <td>{{$mark->mark}}</td>
-          @endforeach
-          <td>{{$avg}}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  @endrole
-  <!-- Table Constructor change table classes, you don't need it in your project -->
-  <!-- <div style="width: 45%; display: inline-block; vertical-align: top">
-  <h2>Table Constructor</h2>
-  <p>
-    <label for="table-bordered">Style: bordered</label>
-    <select id="table-bordered" name="table-bordered">
-      <option selected value="">No</option>
-      <option value="table-bordered">Yes</option>
-    </select>
-  </p>
-  <p>
-    <label for="table-striped">Style: striped</label>
-    <select id="table-striped" name="table-striped">
-      <option selected value="">No</option>
-      <option value="table-striped">Yes</option>
-    </select>
-  </p>
-  <p>
-    <label for="table-hover">Style: hover</label>
-    <select id="table-hover" name="table-hover">
-      <option value="">No</option>
-      <option selected value="table-hover">Yes</option>
-    </select>
-  </p>
-  <p>
-    <label for="table-color">Style: color</label>
-    <select id="table-color" name="table-color">
-      <option value="">Default</option>
-      <option value="table-mc-red">Red</option>
-      <option value="table-mc-pink">Pink</option>
-      <option value="table-mc-purple">Purple</option>
-      <option value="table-mc-deep-purple">Deep Purple</option>
-      <option value="table-mc-indigo">Indigo</option>
-      <option value="table-mc-blue">Blue</option>
-      <option selected value="table-mc-light-blue">Light Blue</option>
-      <option value="table-mc-cyan">Cyan</option>
-      <option value="table-mc-teal">Teal</option>
-      <option value="table-mc-green">Green</option>
-      <option value="table-mc-light-green">Light Green</option>
-      <option value="table-mc-lime">Lime</option>
-      <option value="table-mc-yellow">Yellow</option>
-      <option value="table-mc-amber">Amber</option>
-      <option value="table-mc-orange">Orange</option>
-      <option value="table-mc-deep-orange">Deep Orange</option>
-    </select>
-  </p>  
-  </div> -->
-</div>
+<div class="container" style="padding: 5%; width: 80%">
+    @if($user->group != NULL)
+        <div class="col-md-14">
+            <div class="row">
+                    <div class="tabs-left">
+                        <h1 style="margin-bottom: 3%">{{$user->lastname}} {{$user->name}} {{$user->surname}}</h1>
+                        <ul class="nav nav-tabs col-md-2" style="z-index: 1; min-width: 170px">
+                            <li class="active"><a href="#a" data-toggle="tab">Список групи</a></li>
+                            @if($user->group->disciplines != NULL)
+                                @foreach($user->group->disciplines as $discipline)
+                                    <li><a href="#{{$discipline->id}}"
+                                           data-toggle="tab">{{$discipline->discipline_title}}</a></li>
+                                @endforeach
+                            @endif
+                        </ul>
+                        <div class="tab-content my-tab-content">
+                            <div class="tab-pane active" id="a">
+                                <table id="grid" class="table table-hover table-mc-light-blue">
+                                    <thead>
+                                    <tr>
+                                        <th style="width: 10%"> №
+                                        </th>
+                                        <th data-type="string" style="width: 80%"><input type="text"
+                                                                                         id="myInput1"
+                                                                                         style="color: black"
+                                                                                         onkeyup="myFunction1()"
+                                                                                         placeholder="Пошук по ПІБ.."
+                                                                                         title="Введіть ПІБ студента">ПІБ
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($students as $student)
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                {{$student->lastname}} {{$student->name}} {{$student->surname}}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            @if($user->group->disciplines != NULL)
+                                @foreach($user->group->disciplines as $discipline)
+                                    <div class="tab-pane" id="{{$discipline->id}}">
+                                        <div class="fb fb__1"
+                                             style="display: flex; justify-content: space-between;">
+                                            <div class="fb fb__1_2">
+                                                <h3>{{$discipline->discipline_title}}</h3>
+                                            </div>
+                                            <div class="fb fb__1_3">
+                                                <p>Кількість годин: {{$discipline->hours}}</p>
+                                            </div>
+                                            <div class="fb fb__1_4">
+                                                @if($discipline->teacher_id)
+                                                    <p>
+                                                        Викладач: {{$discipline->teacher->lastname}} {{$discipline->teacher->name}} {{$discipline->teacher->surname}}</p>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        @foreach($marks as $mark)
+                                            @if($mark->discipline_id == $discipline->id)
+                                                @if($mark->user_id == $user->id)
+                                                    <div class="col-md-3 date
+                                                         @if($mark->role_id == 3 || $mark->role_id == 4)
+                                                            {{ ($mark->mark == 5) ? 'mark-five' : '' }}
+                                                            {{ ($mark->mark == 4) ? 'mark-four' : '' }}
+                                                            {{ ($mark->mark == 3) ? 'mark-three' : '' }}
+                                                            {{ ($mark->mark == 2) ? 'mark-two' : '' }}
+                                                            {{ ($mark->mark == 1) ? 'mark-one' : '' }}
+                                                        @endif  "
+                                                        title="{{ $mark->marks_roles->role_name }}. {{$mark->comment}}">
+                                                        {{--{{ ($mark->role_id == 3 || $mark->role_id == 4) ? 'background-color: #2B2B2B' : '' }}--}}
+                                                        <p>{{$mark->mark}}</p>
+                                                        <span style="margin-bottom: 10%">{{$mark->date->format('d')}}</span>
+                                                        <span style="text-transform: lowercase;">{{$month[ $mark->date->format('m') ]}}</span>
+                                                    </div>
+                                                @endif
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                @endforeach
+                            @endif
+                        </div><!-- /tab-content -->
+                    </div><!-- /tabbable -->
+            </div><!-- /row -->
+        </div>
+        @else
+        <div>
+            <p>
+                Користувач не належить до жодної з груп!
+            </p>
+        </div>
+    @endif
 </div>
 
 @endsection

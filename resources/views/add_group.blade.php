@@ -13,7 +13,6 @@
 
                         <form id="form1" class="form-horizontal" method="POST" action="{{ route('addGroup') }}">
                             {{ csrf_field() }}
-
                             <div class="form-group{{ $errors->has('group_number') ? ' has-error' : '' }}">
                                 <label for="group_number" class="col-md-4 control-label">Номер групи</label>
 
@@ -50,14 +49,16 @@
 
                             <div class="form-group{{ $errors->has('curator_name') ? ' has-error' : '' }}">
                                 <label for="curator_name" class="col-md-4 control-label">Куратор</label>
-                            {{--@foreach($users as $user)--}}
+                                {{--@foreach($users as $user)--}}
                                 {{--@endforeach--}}
                                 <div class="col-md-6">
                                     {{--<input id="curator_id" type="text" class="form-control" name="curator_id" value="{{ old('curator_id') }}" required>--}}
                                     <p><select class="form-control"  name="curator_name">
                                             <option>Куратор..</option>
                                         @foreach($teachers as $teacher)
+                                                @if($teacher->hasRole('teacher'))
                                                 <option value="{{$teacher->id}}">{{$teacher->lastname}} {{$teacher->name}} {{$teacher->surname}}</option>
+                                                @endif
                                             @endforeach
                                         </select></p>
                                     @if ($errors->has('curator_name'))

@@ -15,7 +15,7 @@ class UserController extends Controller
     public function show(User $user, Role $role)
     {
         $roles = Role::all();
-        $users = User::all();
+        $users = User::orderBy('id', 'desc')->get();
         return view('users')->with(['users' => $users, 'roles' => $roles]);
     }
 
@@ -69,7 +69,6 @@ public function show_edit(User $user, Group $group)
 {
     $groups = Group::all();
     if(auth()->check()) {
-        // dd($user->roles[0]->name);
             if(auth()->user()->roles[0]->name == "admin" || auth()->user()->id == $user->id) {
 
                 return view('edit_user')->with(['user' => $user, 'groups' => $groups]);
@@ -101,8 +100,29 @@ public function update(Request $request, User $user)
        {
           if ($role->name != $request->input('role'));
           {
-                $user->removeRole($role->name); 
-                $user->assignRole($request->input('role'));
+              $user->removeRole($role->name);
+              $user->assignRole($request->input('role'));
+//              dd($request->input('role'));
+              if($request->input('role') == "admin")
+              {
+                  $roles = Role::get()->where('name', $request->input('role'));
+                  $roles[0]->givePermissionTo('delete users', 'add users', 'add marks', 'add visitings', 'add disciplines', 'add professions', 'add groups', 'edit groups');
+              }
+              else if($request->input('role') == "operator")
+               {
+                   $roles = Role::get()->where('name', $request->input('role'));
+                   $roles[1]->givePermissionTo('add marks', 'add visitings');
+               }
+               else if($request->input('role') == "teacher")
+               {
+                   $roles = Role::get()->where('name', $request->input('role'));
+                   $roles[2]->givePermissionTo('delete users', 'add users', 'add marks', 'add visitings');
+               }
+              else if($request->input('role') == "student")
+              {
+                  $roles = Role::get()->where('name', $request->input('role'));
+                  $roles[3]->givePermissionTo('view own marks');
+              }
           }
         };
     }
@@ -153,14 +173,11 @@ public function update(Request $request, User $user)
     else {
         $user['note'] = NULL;
     }
-
     if($request->input('password') != NULL)
     {
         $user->password = bcrypt($request->input('password'));
     }
-
     $user->save();
-
     return redirect()->route('profile',['user' => $user->id]);
 }
 

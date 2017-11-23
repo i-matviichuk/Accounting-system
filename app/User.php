@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-         'lastname', 'name', 'surname', 'login', 'email', 'password', 'group_id', 'stud_number', 'birthday', 'note',
+        'lastname', 'name', 'surname', 'login', 'email', 'password', 'group_id', 'stud_number', 'birthday', 'note',
     ];
 
     protected $dates = [
@@ -35,8 +35,12 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-   public function group() {
+    public function group() {
         return $this->hasOne('App\Group', 'id', 'group_id');
+    }
+
+    public function discipline() {
+        return $this->hasOne('App\AcademicDisciplines', 'id', 'discipline_id');
     }
 
     public function pass() {
@@ -45,6 +49,15 @@ class User extends Authenticatable
 
     public function mark() {
         return $this->hasMany('App\Marks', 'user_id', 'id');
+    }
+
+    public function examMarks()
+    {
+        return $this->mark()
+            ->where(function ($where_sql) {
+                $where_sql->where('role_id', 3)
+                    ->orWhere('role_id', 4);
+            });
     }
     
 
@@ -111,4 +124,9 @@ class User extends Authenticatable
  
      //     $this->roles()->attach($assigned_roles);
      // }
+
+    public function scopeOfGroup($query, $group_id)
+    {
+        return $query->where('group_id', $group_id);
+    }
 }
