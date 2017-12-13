@@ -1,6 +1,34 @@
 /**
  * Created by illia on 30.10.17.
  */
+document.getElementById("pass_form").style.display="none";
+if (document.getElementById("role_form") !== null)
+{
+    document.getElementById("role_form").style.display="none";
+}
+
+function showOrHide(show_pass, pass_form) {
+    show_pass = document.getElementById(show_pass);
+    pass_form = document.getElementById(pass_form);
+    if (show_pass.checked) {
+        pass_form.style.display = "block";
+    }
+    else {
+        pass_form.style.display = "none";
+    }
+}
+
+function showRole(show_role, role_form) {
+    show_role = document.getElementById(show_role);
+    role_form = document.getElementById(role_form);
+    if (show_role.checked) {
+        role_form.style.display = "block";
+    }
+    else {
+        role_form.style.display = "none";
+    }
+}
+
 function form1()
 {
     document.getElementById("form1").style.display="block";
@@ -14,11 +42,14 @@ function form2()
 }
 
 var grid = document.getElementById('grid');
-grid.onclick = function(e) {
-    if (e.target.tagName != 'TH') return;
-    // Если TH -- сортируем
-    sortGrid(e.target.cellIndex, e.target.getAttribute('data-type'));
-};
+if (grid !== null)
+{
+    grid.onclick = function(e) {
+        if (e.target.tagName != 'TH') return;
+        // Если TH -- сортируем
+        sortGrid(e.target.cellIndex, e.target.getAttribute('data-type'));
+    };
+}
 
 function sortGrid(colNum, type) {
     var tbody = grid.getElementsByTagName('tbody')[0];

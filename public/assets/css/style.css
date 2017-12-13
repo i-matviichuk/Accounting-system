@@ -3108,9 +3108,9 @@ th:hover {
 
 .rotate-line {
     background: #999;
-    width: 20px;
+    width: 100%;
     height: 1px;
-    transform: rotate(135deg);
+    transform: rotate(155deg);
 }
 
 table tr {

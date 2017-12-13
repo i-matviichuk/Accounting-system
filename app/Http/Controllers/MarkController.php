@@ -54,6 +54,56 @@ class MarkController extends Controller
         }
     }
 
+    public function editMark(Marks $mark, Group $group, User $user, MarksRoles $marksRoles)
+    {
+        if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('teacher') || auth()->user()->hasRole('operator')) {
+            $marksRoles = MarksRoles::all();
+            $students = User::all();
+            return view('edit_mark', ['mark' => $mark, 'students' => $students, 'group' => $group, 'marksRoles' => $marksRoles]);
+        }
+        else
+        {
+            return redirect()->back();
+        }
+    }
+
+    public function updateMark(Request $request, Marks $marks)
+    {
+        if ($request->input('mark') != "Оцінка..") {
+            $data['mark'] = $request->input('mark');
+        } else {
+            flash()->error('Виберіть оцінку!');
+            return redirect()->back();
+        }
+
+        $data['date'] = $request->input('date');
+        $data['comment'] = $request->input('comment');
+        if ($request->input('student_name') != "Студент..") {
+            $data['user_id'] = $request->input('student_name');
+        } else {
+            flash()->error('Виберіть студента!');
+            return redirect()->back();
+        }
+
+        if ($request->input('discipline_title') != "Предмет..") {
+            $data['discipline_id'] = $request->input('discipline_title');
+        } else {
+            flash()->error('Виберіть предмет!');
+            return redirect()->back();
+        }
+
+        if ($request->input('role_title') != "Вид оцінки..") {
+            $data['role_id'] = $request->input('role_title');
+        } else {
+            flash()->error('Виберіть вид оцінки!');
+            return redirect()->back();
+        }
+
+        $mark = Marks::create($data);
+        flash()->success('Успішно оновлено');
+        return redirect()->back();
+    }
+
     public function addMark(Request $request, User $user)
     {
         if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('teacher') || auth()->user()->hasRole('operator')) {
@@ -87,9 +137,9 @@ class MarkController extends Controller
 
 //                            $insertData = DB::table('students')->insert($insert);
                             if ($marks) {
-                                Session::flash('success', 'Your Data has successfully imported');
+                                flash()->success('Дані введені успішно');
                             } else {
-                                Session::flash('error', 'Error inserting the data..');
+                                flash()->error('Помилка про вводі даних!');
                                 return back();
                             }
                         }
@@ -105,6 +155,7 @@ class MarkController extends Controller
                 if ($request->input('mark') != "Оцінка..") {
                     $data['mark'] = $request->input('mark');
                 } else {
+                    flash()->error('Виберіть оцінку!');
                     return redirect()->back();
                 }
 
@@ -113,22 +164,26 @@ class MarkController extends Controller
                 if ($request->input('student_name') != "Студент..") {
                     $data['user_id'] = $request->input('student_name');
                 } else {
+                    flash()->error('Виберіть студента!');
                     return redirect()->back();
                 }
 
                 if ($request->input('discipline_title') != "Предмет..") {
                     $data['discipline_id'] = $request->input('discipline_title');
                 } else {
+                    flash()->error('Виберіть предмет!');
                     return redirect()->back();
                 }
 
-                if ($request->input('role_title') != "Предмет..") {
+                if ($request->input('role_title') != "Вид оцінки..") {
                     $data['role_id'] = $request->input('role_title');
                 } else {
+                    flash()->error('Виберіть вид оцінки!');
                     return redirect()->back();
                 }
 
                 $mark = Marks::create($data);
+                flash()->success('Оцінка успішно додана');
                 return redirect()->back();
             }
         }

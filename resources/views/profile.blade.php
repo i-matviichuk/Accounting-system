@@ -79,10 +79,10 @@
                                     <span><p>{{$user->roles[0]->name}}</p></span>
                                 <!-- @endif -->
                                 </div>
-                                <div class="clearfix"></div>
-                                <hr style="margin:5px 0 5px 0;">
 
-                                @if($user->group != NULL)
+                            @if($user->group != NULL)
+                                    <div class="clearfix"></div>
+                                    <hr style="margin:5px 0 5px 0;">
                                     <div class="col-sm-11" style="text-align: center">Шкала успішності</div><br>
 
                                     <div class="progress w3-agileits">
@@ -97,7 +97,11 @@
                                     <div class="clearfix"></div>
                                     <div class="bot-border"></div>
                                     <div class="col-sm-5 col-xs-6 tital ">Середній бал:</div>
+                                @if($avg != 0)
                                     <div class="col-sm-7">{{round($avg, 2)}}</div>
+                                    @else
+                                        <div class="col-sm-7">Ще немає оцінок</div>
+                                    @endif
                                 @endif
                                 <div class="clearfix"></div>
                                 <div class="bot-border"></div>
@@ -128,6 +132,13 @@
                                     <div class="col-sm-7">{{$user->group->profession->specialty_title}}</div>
 
 
+                                @endif
+
+                                @if($user->group != NULL)
+                                    <div class="clearfix"></div>
+                                    <div class="bot-border"></div>
+                                    <div class="col-sm-5 col-xs-6 tital ">Номер студентського:</div>
+                                    <div class="col-sm-7">{{$user->stud_number}}</div>
                                 @endif
 
                                 @if($user->birthday != NULL)

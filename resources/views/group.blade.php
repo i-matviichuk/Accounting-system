@@ -6,7 +6,7 @@
     <div class="container" style=" margin-top: 5%; margin-bottom:5%; width: 80%">
         <div class="row">
             <div class="table-responsive-vertical shadow-z-1">
-                <div class="col-md-7" style="width: auto; max-width: 100%">
+                <div class="col-md-7" style="width: 100%;">
 
                     <div class="panel panel-default">
                         <div class="panel-heading" style="background-color: #10c7bf; color: #fff">
@@ -150,7 +150,8 @@
                                                                         @if($mark->user_id == $user->id)
                                                                             @if($mark->marks_roles->id == 3 || $mark->marks_roles->id == 4)
                                                                             <td style="background-color: #00C8BE; color: white" class="center-text"
-                                                                                title="{{ $mark->marks_roles->role_name }}.{{$mark->comment}}">{{$mark->mark}}</td>
+                                                                                title="{{ $mark->marks_roles->role_name }}.{{$mark->comment}}">
+                                                                                <a href="{{ route('editMark', $mark->id) }}" style="color: white;">{{$mark->mark}}</a></td>
                                                                             @else
                                                                                 <td  class="center-text"
                                                                                     title="{{ $mark->marks_roles->role_name }}.{{$mark->comment}}">{{$mark->mark}}</td>

@@ -60,7 +60,12 @@
                 </a>
             <ul class="dropdown-menu" style="top: auto;">
                 <li><a href="{{ route('profile', $user->id) }}"><i class="fa fa-user" aria-hidden="true" style="font-size: 16px"> Профіль користувача</i></a></li>
+              @role('admin')
                 <li><a href="{{ route('edit', $user->id) }}"><i class="fa fa-pencil" aria-hidden="true" style="font-size: 16px"> Редагувати користувача</i></a></li>
+              @endrole
+              @role('teacher')
+              <li><a href="{{ route('edit', $user->id) }}"><i class="fa fa-pencil" aria-hidden="true" style="font-size: 16px"> Редагувати користувача</i></a></li>
+              @endrole
               <li> 
                 <form id="loginForm" action="{{ route('delete', $user->id) }}" onclick="return (confirm('Дійсно видалити?'))" method="post">
                    {{ csrf_field() }}

@@ -26,7 +26,7 @@ Route::group( ['middleware' => ['auth']], function() {
     // Route::resource('posts', 'PostController');
 });
 
-Route::get('/users', 'UserController@show');
+Route::get('/users', 'UserController@show')->name('users');
 
 Route::get('/groups', 'GroupController@showGroups')->name('showGroups');
 
@@ -42,13 +42,15 @@ Route::post('/groups/add', 'GroupController@addGroup')->name('addGroup');
 
 Route::post('/groups/{id}', 'GroupController@deleteGroup')->name('deleteGroup')->middleware('role:admin');
 
-Route::get('new', 'RegisterUser@show')->middleware('role:admin');
-
 Route::get('/user/{user}/marks', 'MarkController@index')->name('marks');
 
 Route::get('/group/{group}/add/mark', 'MarkController@showForm')->name('showAddMark');
 
 Route::post('/group/{group}/add/mark', 'MarkController@addMark')->name('addMark');
+
+Route::get('/mark/{mark}/edit', 'MarkController@editMark')->name('editMark');
+
+Route::post('/mark/{mark}/edit', 'MarkController@updateMark')->name('updateMark');
 
 Route::get('/', 'UserController@index');
 

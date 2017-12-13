@@ -70,10 +70,10 @@
                         <li><a @yield('professions') href="/professions">Спеціальності</a></li>
                         @endrole
                         @role('student')
-                        @if(Auth::user()->group != NULL)
+                        {{--@if(Auth::user()->group != NULL)--}}
                             <li><a @yield('marks') href="{{route('marks', Auth::user()->id)}}">Оцінки</a></li>
                             <li><a @yield('visitings') href="#">Відвідування</a></li>
-                        @endif
+                        {{--@endif--}}
                         @endrole
                         @endauth
                         @if (!Auth::check())
@@ -151,7 +151,7 @@
                             </li>
                             @endrole
                             @role('admin')
-                            <li @yield('profile') style="font-size: 16px; margin-left: 32% !important;"
+                            <li @yield('profile') style="font-size: 16px; margin-left: 30% !important;"
                                 class="dropdown w3-agile login w3"><a href="#" data-toggle="dropdown" role="button"
                                                                       aria-haspopup="true" aria-expanded="true">
                                     {{Auth::user()->name}} {{Auth::user()->lastname}}
@@ -160,8 +160,6 @@
                                     <li><a @yield ('profile') href="{{ url('/profile/' . Auth::user()->id ) }}"
                                            style="font-size: 16px"><i class="fa fa-user" aria-hidden="true"> Моя
                                                 сторінка</i></a></li>
-                                    <!-- <li><a href="/add_article"><i class="fa fa-user" aria-hidden="true"> Add article</i></a></li> -->
-                                    <!-- <li><a href="#">Edit profile</a></li> -->
                                     <li role="separator" class="divider w3-agile"></li>
                                     <li>
                                         <form id="loginForm" action="{{ route('logout') }}" method="post">
@@ -173,7 +171,7 @@
                             </li>
                             @endrole
                             @role('operator')
-                            <li @yield('profile') style="font-size: 16px; margin-left: 32% !important;"
+                            <li @yield('profile') style="font-size: 16px; margin-left: 30% !important;"
                                 class="dropdown w3-agile login w3"><a href="#" data-toggle="dropdown" role="button"
                                                                       aria-haspopup="true" aria-expanded="true">
                                     {{Auth::user()->name}} {{Auth::user()->lastname}}
@@ -195,7 +193,7 @@
                             </li>
                             @endrole
                             @role('teacher')
-                            <li @yield('profile') style="font-size: 16px; margin-left: 32% !important;"
+                            <li @yield('profile') style="font-size: 16px; margin-left: 30% !important;"
                                 class="dropdown w3-agile login w3"><a href="#" data-toggle="dropdown" role="button"
                                                                       aria-haspopup="true" aria-expanded="true">
                                     {{Auth::user()->name}} {{Auth::user()->lastname}}
@@ -210,7 +208,7 @@
                                     <li>
                                         <form id="loginForm" action="{{ route('logout') }}" method="post">
                                             {{ csrf_field() }}
-                                            <input style="font-size: 14px" type="submit" id="login" value="Sign out">
+                                            <input style="font-size: 14px" type="submit" id="login" value="Вийти">
                                         </form>
                                     </li>
                                 </ul>

@@ -1,5 +1,7 @@
 @extends('blocks.layout')
 
+@section('marks') class="active" @endsection
+
 @section('content')
 
 <div class="container" style="padding: 5%; width: 80%">
@@ -92,10 +94,10 @@
             </div><!-- /row -->
         </div>
         @else
-        <div>
-            <p>
+        <div style="margin: 10%">
+            <h3>
                 Користувач не належить до жодної з груп!
-            </p>
+            </h3>
         </div>
     @endif
 </div>

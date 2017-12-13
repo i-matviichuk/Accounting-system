@@ -20,6 +20,7 @@ class ProfessionsController extends Controller
     public function addProfession(Request $request) {
         $data['specialty_title'] = $request->input('specialty_title');
         $professions = Professions::create($data);
+        flash()->success('Спеціальність успішно додана');
         return redirect()->route('showProfessions');
     }
 
@@ -35,6 +36,7 @@ class ProfessionsController extends Controller
             $profession->specialty_title = $request->input('specialty_title');
         }
         $profession->save();
+        flash()->success('Успішно оновлено');
         return redirect()->route('showProfessions');
     }
 }

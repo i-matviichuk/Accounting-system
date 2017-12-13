@@ -20,6 +20,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     {{--<link href="{{ asset('assets/sass/app.css') }}" rel='stylesheet' type='text/css' />--}}
     <link href="{{ asset('assets/css/font-awesome.css') }}" rel="stylesheet"> 			<!-- font-awesome icons -->
     <!-- //Custom Theme files -->
+    {{--notifications--}}
+    {{--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">--}}
     <!-- fonts -->
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
     <link href='//fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700' rel='stylesheet' type='text/css'>
@@ -44,6 +46,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         }
 
     </style>
+@include('flash::message')
     <!-- //js -->
 </head>
 <body>

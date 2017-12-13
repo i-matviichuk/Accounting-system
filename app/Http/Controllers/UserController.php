@@ -56,23 +56,23 @@ public function store(Request $request)
     return redirect()->route('users.index');
 }
 
-public function edit($id)
-{
-    $user = User::find($id);
-    $roles = Role::pluck('name', 'id');
-    $permissions = Permission::all('name', 'id');
-
-    return view('edit_user', compact('user', 'roles', 'permissions'));
-}
+//public function edit($id)
+//{
+//    $user = User::find($id);
+//    $roles = Role::pluck('name', 'id');
+//    $permissions = Permission::all('name', 'id');
+//
+//    return view('edit_user', compact('user', 'roles', 'permissions'));
+//}
 
 public function show_edit(User $user, Group $group)
 {
     $groups = Group::all();
     if(auth()->check()) {
-            if(auth()->user()->roles[0]->name == "admin" || auth()->user()->id == $user->id) {
+            if(auth()->user()->hasRole('admin') || auth()->user()->id == $user->id) {
 
                 return view('edit_user')->with(['user' => $user, 'groups' => $groups]);
-            } 
+            }
             else {
                 return redirect()->route('edit', auth()->user()->id);
             }
@@ -102,29 +102,8 @@ public function update(Request $request, User $user)
           {
               $user->removeRole($role->name);
               $user->assignRole($request->input('role'));
-//              dd($request->input('role'));
-              if($request->input('role') == "admin")
-              {
-                  $roles = Role::get()->where('name', $request->input('role'));
-                  $roles[0]->givePermissionTo('delete users', 'add users', 'add marks', 'add visitings', 'add disciplines', 'add professions', 'add groups', 'edit groups');
-              }
-              else if($request->input('role') == "operator")
-               {
-                   $roles = Role::get()->where('name', $request->input('role'));
-                   $roles[1]->givePermissionTo('add marks', 'add visitings');
-               }
-               else if($request->input('role') == "teacher")
-               {
-                   $roles = Role::get()->where('name', $request->input('role'));
-                   $roles[2]->givePermissionTo('delete users', 'add users', 'add marks', 'add visitings');
-               }
-              else if($request->input('role') == "student")
-              {
-                  $roles = Role::get()->where('name', $request->input('role'));
-                  $roles[3]->givePermissionTo('view own marks');
-              }
           }
-        };
+       };
     }
 
     if($request->input('lastname') != NULL) {
@@ -142,42 +121,20 @@ public function update(Request $request, User $user)
     if($request->input('email') != NULL) {
         $user->email = $request->input('email');
     }
-    
-    $group_id = Group::where('group_number', $request->input('group_number'))->first();
-    if($group_id != NULL)
-    {
-        $user->group_id = $group_id->id;     
-    }
-    else {
-        $user->group_id = NULL;
-    }
-
-    if($request->input('stud_number') != NULL)
-    {
-        $user['stud_number'] = $request->input('stud_number');    
-    }
-    else {
-        $user['stud_number'] = NULL;
-    }
-    if($request->input('birthday') != NULL)
-    {
-        $user['birthday'] = $request->input('birthday');
-    }
-    else {
-        $user['birthday'] = NULL;
-    }
-    if($request->input('note') != NULL)
-    {
-        $user['note'] = $request->input('note');
-    }
-    else {
-        $user['note'] = NULL;
+//    dd($request->input());
+//    $group_id = Group::where('group_number', $request->input('group_number'))->first();
+    if(!auth()->user()->hasRole('student')) {
+        $user->group_id = $request->input('group_number');
+        $user->stud_number = $request->input('stud_number');
+        $user->birthday = $request->input('birthday');
+        $user->note = $request->input('note');
     }
     if($request->input('password') != NULL)
     {
         $user->password = bcrypt($request->input('password'));
     }
     $user->save();
+    flash('Успішно збережено')->success();
     return redirect()->route('profile',['user' => $user->id]);
 }
 
@@ -186,15 +143,12 @@ public function destroy($id)
     if ( Auth::user()->id != $id ) {
         $user = User::find($id);
         $user->delete();
-        return redirect()->back();
+        flash()->success('Користувач успішно видалений');
+        return redirect()->route('users');
     }
-    
-    if( User::findOrFail($id)) {
-        flash()->success('User has been deleted');
-    } else {
-        flash()->success('User not deleted');
+    else {
+        flash()->error('Користувача не видалено!');
     }
-
     return redirect()->back();
 }
 

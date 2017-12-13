@@ -28,9 +28,10 @@ class GroupController extends Controller
     }
 
 
-    public function showGroups(Group $group, User $user) {
+    public function showGroups(Group $group, User $user, Marks $marks) {
         if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('operator') || auth()->user()->hasRole('teacher'))
         {
+            $marks = Marks::all();
             $groups = Group::orderBy('id', 'desc')->get();
             $users = User::all();
             return view('groups')->with(['groups' => $groups, 'users' => $users]);
@@ -53,7 +54,7 @@ class GroupController extends Controller
 
     public function showEdit(Group $group, Professions $professions, User $user)
     {
-        if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('teacher'))
+        if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('operator') || auth()->user()->hasRole('teacher'))
         {
             $professions = Professions::all();
             $teachers = User::all();
