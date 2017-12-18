@@ -18,6 +18,9 @@ class ProfessionsController extends Controller
     }
 
     public function addProfession(Request $request) {
+        $this->validate($request, [
+            'specialty_title' => 'required|string|max:255',
+        ]);
         $data['specialty_title'] = $request->input('specialty_title');
         $professions = Professions::create($data);
         flash()->success('Спеціальність успішно додана');
@@ -31,12 +34,16 @@ class ProfessionsController extends Controller
 
     public function updateProfession(Request $request, Professions $profession)
     {
-        if ($request->input('specialty_title') != NULL)
-        {
-            $profession->specialty_title = $request->input('specialty_title');
-        }
+        $this->validate($request, [
+            'specialty_title' => 'required|string|max:255',
+        ]);
+        $profession->specialty_title = $request->input('specialty_title');
         $profession->save();
-        flash()->success('Успішно оновлено');
+        if ($profession) {
+            flash()->success('Успішно оновлено');
+        } else {
+            flash()->success('Помилка при оновленні!');
+        }
         return redirect()->route('showProfessions');
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\User;
 use App\Role;
 use App\Group;
@@ -13,34 +14,30 @@ use Carbon\Carbon;
 
 class UploadUsers extends Controller
 {
-    public function showForm(Group $group) {
-        if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('operator') || auth()->user()->hasRole('teacher')) {
+    public function showForm(Group $group)
+    {
+        if (auth()->user()->hasRole('admin') || auth()->user()->hasRole('operator') || auth()->user()->hasRole('teacher')) {
             $groups = Group::all();
             return view('register_user')->with(['groups' => $groups]);
-        }
-        else
-        {
+        } else {
             return redirect()->back();
         }
     }
 
-    protected function validator(array $data)
+    public function store(Request $request)
     {
-        return Validator::make($data, [
+        $this->validate($request, [
             'lastname' => 'required|string|max:255',
             'name' => 'required|string|max:255',
             'surname' => 'required|string|max:255',
             'login' => 'required|string|max:255|unique:users',
             'email' => 'required|string|email|max:255',
-            'group_id' => 'required|unsignedInt|group_id|max:255',
-            'birthday' => 'required|string|birthday|max:255',
-            'note' => 'required|string|note|max:255',
+            'group_id' => 'max:255',
+            'stud_number' => 'max:255',
+            'birthday' => 'date|max:255',
+            'note' => 'max:255',
             'password' => 'required|string|min:6|confirmed',
         ]);
-    }
-
-    public function store(Request $request)
-    {
         //get file
         if ($request->file() != NULL) {
             $extension = File::extension($request->file->getClientOriginalName());
@@ -66,8 +63,7 @@ class UploadUsers extends Controller
                         ];
                     }
                     if (!empty($insert)) {
-                        foreach ($insert as $user)
-                        {
+                        foreach ($insert as $user) {
                             $user = User::create($user);
                             $user->assignRole($request->input('role'));
                         }
@@ -90,9 +86,9 @@ class UploadUsers extends Controller
             $data['surname'] = $request->input('surname');
             $data['login'] = $request->input('login');
             $data['email'] = $request->input('email');
-            $group_id = Group::where('group_number', $request->input('group_number'))->first();
-            if ($group_id != NULL) {
-                $data['group_id'] = $group_id->id;
+//            $group_id = Group::where('group_number', $request->input('group_number'))->first();
+            if ($request->input('group_number') != 'Група..') {
+                $data['group_id'] = $request->input('group_number');
             }
             if ($request->input('stud_number') != NULL) {
                 $data['stud_number'] = $request->input('stud_number');

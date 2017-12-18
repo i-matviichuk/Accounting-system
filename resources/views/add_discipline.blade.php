@@ -32,7 +32,7 @@
                                             <option>Викладач..</option>
                                             @foreach($teachers as $teacher)
                                                 @if($teacher->hasRole('teacher'))
-                                                    <option value="{{$teacher->id}}">{{$teacher->lastname}} {{$teacher->name}} {{$teacher->surname}}</option>
+                                                    <option value="{{ $teacher->id }}" {{ (old('teacher_name') == $teacher->id) ? "selected" : '' }}>{{$teacher->lastname}} {{$teacher->name}} {{$teacher->surname}}</option>
                                                 @endif
                                             @endforeach
                                         </select></p>
@@ -43,25 +43,6 @@
                                     @endif
                                 </div>
                             </div>
-
-                            {{--<div class="form-group{{ $errors->has('group_number') ? ' has-error' : '' }}">--}}
-                                {{--<label for="group_number" class="col-md-4 control-label">Група</label>--}}
-
-                                {{--<div class="col-md-6">--}}
-                                    {{--<input id="profession_id" type="text" class="form-control" name="profession_id" value="{{ old('profession_id') }}" required>--}}
-                                    {{--<p><select class="form-control"  name="group_number">--}}
-                                            {{--<option>Група..</option>--}}
-                                        {{--@foreach($groups as $group)--}}
-                                                {{--<option value="{{$group->id}}">{{$group->group_number}}</option>--}}
-                                            {{--@endforeach--}}
-                                        {{--</select></p>--}}
-                                    {{--@if ($errors->has('group_number'))--}}
-                                        {{--<span class="help-block">--}}
-                                        {{--<strong>{{ $errors->first('group_number') }}</strong>--}}
-                                    {{--</span>--}}
-                                    {{--@endif--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
 
                             <div class="form-group{{ $errors->has('hours') ? ' has-error' : '' }}">
                                 <label for="hours" class="col-md-4 control-label">Кількість годин</label>

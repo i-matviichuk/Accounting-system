@@ -123,7 +123,8 @@
                                     <p><select class="form-control" name="group_number">
                                             <option>Група..</option>
                                             @foreach($groups as $group)
-                                                <option>{{$group->group_number}}</option>
+                                                {{--{{dd(old('group_number'), )}}--}}
+                                                <option value="{{ $group->id }}" {{ (old('group_number') == $group->id) ? "selected" : '' }}>{{$group->group_number}}</option>
                                             @endforeach
                                         </select></p>
                                     {{--<input id="group_number" type="text" class="form-control" name="group_number">--}}
@@ -140,7 +141,7 @@
                                 <label for="stud_number" class="col-md-4 control-label">Студентський</label>
 
                                 <div class="col-md-6">
-                                    <input id="stud_number" type="text" class="form-control" name="stud_number">
+                                    <input id="stud_number" type="text" class="form-control" name="stud_number" value="{{ old('stud_number') }}">
 
                                     @if ($errors->has('stud_number'))
                                         <span class="help-block">
@@ -155,7 +156,7 @@
 
                                 <div class="col-md-6">
                                     <input id="birthday" type="text" class="form-control" name="birthday"
-                                           placeholder="2000-12-31" required>
+                                           placeholder="2000-12-31" value="{{ old('birthday') }}">
 
                                     @if ($errors->has('birthday'))
                                         <span class="help-block">
@@ -169,7 +170,7 @@
                                 <label for="note" class="col-md-4 control-label">Нотатка</label>
 
                                 <div class="col-md-6">
-                                    <input id="note" type="text" class="form-control" name="note">
+                                    <input id="note" type="text" class="form-control" name="note" value="{{ old('note') }}">
 
                                     @if ($errors->has('note'))
                                         <span class="help-block">

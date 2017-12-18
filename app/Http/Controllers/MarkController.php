@@ -15,24 +15,23 @@ use File;
 
 class MarkController extends Controller
 {
-    public function index(User $user, AcademicDisciplines $discipline) {
+    public function index(User $user, AcademicDisciplines $discipline)
+    {
         $students = User::where('group_id', '=', $user->group_id)->get();
         $marks = Marks::orderBy('date', 'desc')->get();
         $exams = $user->examMarks()->get();
         $avg = $exams->avg('mark');
-        $fill = (100 * $avg)/5;
-        $month = ["01"=>"Січня","02"=>"Лютого","03"=>"Березня","04"=>"Квітня","05"=>"Травня", "06"=>"Червня", "07"=>"Липня",
-            "08"=>"Серпня","09"=>"Вересня","10"=>"Жовтня","11"=>"Листопада","12"=>"Грудня"];
+        $fill = (100 * $avg) / 5;
+        $month = ["01" => "Січня", "02" => "Лютого", "03" => "Березня", "04" => "Квітня", "05" => "Травня", "06" => "Червня", "07" => "Липня",
+            "08" => "Серпня", "09" => "Вересня", "10" => "Жовтня", "11" => "Листопада", "12" => "Грудня"];
 //        $fill = 100;
-        if(auth()->check()) {
-            if(auth()->user()->id == $user->id || auth()->user()->hasRole('admin') || auth()->user()->hasRole('teacher') || auth()->user()->hasRole('operator')) {
-                return view('marks', ['user' => $user, 'students' => $students,'marks' => $marks, 'avg' => $avg, 'fill' => $fill, 'month' => $month]);
-            }
-            else {
+        if (auth()->check()) {
+            if (auth()->user()->id == $user->id || auth()->user()->hasRole('admin') || auth()->user()->hasRole('teacher') || auth()->user()->hasRole('operator')) {
+                return view('marks', ['user' => $user, 'students' => $students, 'marks' => $marks, 'avg' => $avg, 'fill' => $fill, 'month' => $month]);
+            } else {
                 return redirect()->route('marks', auth()->user()->id);
             }
-        }
-        else {
+        } else {
             return redirect('/');
         }
 //    	$user = Auth::user();
@@ -43,32 +42,36 @@ class MarkController extends Controller
 
     public function showForm(Group $group, User $user, Marks $marks, MarksRoles $marksRoles)
     {
-        if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('teacher') || auth()->user()->hasRole('operator')) {
+        if (auth()->user()->hasRole('admin') || auth()->user()->hasRole('teacher') || auth()->user()->hasRole('operator')) {
             $marksRoles = MarksRoles::all();
             $students = User::all();
             return view('add_mark', ['students' => $students, 'group' => $group, 'marks' => $marks, 'marksRoles' => $marksRoles]);
-        }
-        else
-        {
+        } else {
             return redirect()->back();
         }
     }
 
     public function editMark(Marks $mark, Group $group, User $user, MarksRoles $marksRoles)
     {
-        if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('teacher') || auth()->user()->hasRole('operator')) {
+        if (auth()->user()->hasRole('admin') || auth()->user()->hasRole('teacher') || auth()->user()->hasRole('operator')) {
             $marksRoles = MarksRoles::all();
             $students = User::all();
             return view('edit_mark', ['mark' => $mark, 'students' => $students, 'group' => $group, 'marksRoles' => $marksRoles]);
-        }
-        else
-        {
+        } else {
             return redirect()->back();
         }
     }
 
     public function updateMark(Request $request, Marks $marks)
     {
+        $this->validate($request, [
+            'mark' => 'required|integer|max:2',
+            'date' => 'required|date|max:255',
+            'comment' => 'required|string|max:255',
+            'student_name' => 'required|string|max:255',
+            'discipline_title' => 'required|integer|max:255',
+            'role_title' => 'required|integer|max:255',
+        ]);
         if ($request->input('mark') != "Оцінка..") {
             $data['mark'] = $request->input('mark');
         } else {
@@ -106,7 +109,15 @@ class MarkController extends Controller
 
     public function addMark(Request $request, User $user)
     {
-        if(auth()->user()->hasRole('admin') || auth()->user()->hasRole('teacher') || auth()->user()->hasRole('operator')) {
+        $this->validate($request, [
+            'mark' => 'required|integer|max:2',
+            'date' => 'required|date|max:255',
+            'comment' => 'required|string|max:255',
+            'student_name' => 'required|string|max:255',
+            'discipline_title' => 'required|integer|max:255',
+            'role_title' => 'required|integer|max:255',
+        ]);
+        if (auth()->user()->hasRole('admin') || auth()->user()->hasRole('teacher') || auth()->user()->hasRole('operator')) {
             if ($request->file() != NULL) {
                 $extension = File::extension($request->file->getClientOriginalName());
                 if ($extension == "xlsx" || $extension == "xls" || $extension == "csv") {
@@ -117,9 +128,7 @@ class MarkController extends Controller
                     if (!empty($data) && $data->count()) {
 
                         foreach ($data as $key => $value) {
-//                                                $data['user_id'] = User::where('login', '=', '$row[0]');
                             if ($request->input('discipline_title') != "Предмет.." && $request->input('role_title') != "Предмет..") {
-//                            dd($value);
                                 $user = User::where('login', '=', $value->login)->first();
                                 $insert[] = [
                                     'discipline_id' => $request->input('discipline_title'),
@@ -131,11 +140,9 @@ class MarkController extends Controller
                                 ];
                             }
                         }
-//                        dd($insert);
                         if (!empty($insert)) {
                             $marks = Marks::insert($insert);
 
-//                            $insertData = DB::table('students')->insert($insert);
                             if ($marks) {
                                 flash()->success('Дані введені успішно');
                             } else {
@@ -183,12 +190,14 @@ class MarkController extends Controller
                 }
 
                 $mark = Marks::create($data);
-                flash()->success('Оцінка успішно додана');
+                if ($mark) {
+                    flash()->success('Оцінка успішно додана');
+                } else {
+                    flash()->error('Оцінка не додана!');
+                }
                 return redirect()->back();
             }
-        }
-        else
-        {
+        } else {
             return redirect()->back();
         }
     }

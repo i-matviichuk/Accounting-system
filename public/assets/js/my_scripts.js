@@ -1,7 +1,10 @@
 /**
  * Created by illia on 30.10.17.
  */
-document.getElementById("pass_form").style.display="none";
+if (document.getElementById("pass_form") !== null)
+{
+    document.getElementById("pass_form").style.display="none";
+}
 if (document.getElementById("role_form") !== null)
 {
     document.getElementById("role_form").style.display="none";

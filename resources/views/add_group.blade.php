@@ -36,7 +36,7 @@
 
                                             <option>Спеціальність..</option>
                                             @foreach($professions as $profession)
-                                                <option value="{{$profession->id}}">{{$profession->specialty_title}} </option>
+                                                <option value="{{$profession->id}}" {{ (old('profession_name') == $profession->id) ? "selected" : '' }}>{{$profession->specialty_title}} </option>
                                             @endforeach
                                         </select></p>
                                     @if ($errors->has('profession_name'))
@@ -57,7 +57,7 @@
                                             <option>Куратор..</option>
                                         @foreach($teachers as $teacher)
                                                 @if($teacher->hasRole('teacher'))
-                                                <option value="{{$teacher->id}}">{{$teacher->lastname}} {{$teacher->name}} {{$teacher->surname}}</option>
+                                                <option value="{{$teacher->id}}" {{ (old('curator_name') == $teacher->id) ? "selected" : '' }}>{{$teacher->lastname}} {{$teacher->name}} {{$teacher->surname}}</option>
                                                 @endif
                                             @endforeach
                                         </select></p>
@@ -74,31 +74,9 @@
                                 </div>
                             </div>
                         </form>
-
-
-                        <form id="form2" style="display: none" action="{{url('/new')}}" method="post" enctype="multipart/form-data">
-                            {{csrf_field()}}
-                            <div class="form-group">
-                                <label for="upload-file">Завантажити</label>
-                                <input type="file" name="upload-file" class="form-control" /><br>
-                                <div>Вкажіть роль користувача</div>
-                                <input type="radio" name="role" value="student" checked="checked">  Студент</input><br>
-                                <input type="radio" name="role" value="operator">  Оператор</input><br>
-                                <input type="radio" name="role" value="teacher">  Викладач</input><br>
-
-                                <!-- <input type="radio" name="role" value="admin">Адміністратор</input> -->
-
-                            </div>
-                            <input class="btn btn-success" type="submit" value="Upload file" name="submit">
-                        </form>
-
                     </div>
                 </div>
             </div>
         </div>
-
-
-
-
     </div>
 @endsection

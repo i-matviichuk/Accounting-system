@@ -18,7 +18,11 @@ class DisciplineController extends Controller
 
     public function addDiscipline(Group $group, Request $request)
     {
-
+        $this->validate($request, [
+            'discipline_title' => 'required|string|max:255',
+            'teacher_name' => 'required|integer|max:255',
+            'hours' => 'required|integer|max:255',
+        ]);
         $data['discipline_title'] = $request->input('discipline_title');
 
         if($request->input('teacher_name') != "Викладач..")

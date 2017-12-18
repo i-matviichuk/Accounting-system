@@ -85,15 +85,19 @@ public function show_edit(User $user, Group $group)
 public function update(Request $request, User $user)
 {
 
-    // return Validator::make($user, [
-    //         'lastname' => 'required|string|max:255',
-    //         'name' => 'required|string|max:255',
-    //         'surname' => 'required|string|max:255',
-    //         'login' => 'required|string|max:255|unique:users',
-    //         'email' => 'required|string|email|max:255',
-    //         'password' => 'required|string|min:6|confirmed',
-    //     ]);
-    //$user = User::find($user);
+    $rules = [
+        'lastname' => 'required|string|max:255',
+        'name' => 'required|string|max:255',
+        'surname' => 'required|string|max:255',
+        'login' => 'required|string|max:255|unique:users,login,' . $user->id,
+        'email' => 'required|string|email|max:255',
+    ];
+    if ($request->show_pass_field) {
+        $rules['password'] = 'required|string|min:6|confirmed';
+    }
+
+    $this->validate($request, $rules);
+//    $user = User::find($user);
     if($request->input('role') != NULL)
     {   
        foreach ($user->roles as $role) 
@@ -107,7 +111,7 @@ public function update(Request $request, User $user)
     }
 
     if($request->input('lastname') != NULL) {
-        $user->lastname = $request->input('lastname'); 
+        $user->lastname = $request->input('lastname');
     }
     if($request->input('name') != NULL) {
         $user->name = $request->input('name');
@@ -121,10 +125,14 @@ public function update(Request $request, User $user)
     if($request->input('email') != NULL) {
         $user->email = $request->input('email');
     }
-//    dd($request->input());
-//    $group_id = Group::where('group_number', $request->input('group_number'))->first();
+
     if(!auth()->user()->hasRole('student')) {
-        $user->group_id = $request->input('group_number');
+        if ($request->input('group_number') == 'Група..')
+        {
+            $user->group_id = NULL;
+        } else {
+            $user->group_id = $request->input('group_number');
+        }
         $user->stud_number = $request->input('stud_number');
         $user->birthday = $request->input('birthday');
         $user->note = $request->input('note');
