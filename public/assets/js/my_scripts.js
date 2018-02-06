@@ -68,7 +68,7 @@ function sortGrid(colNum, type) {
             break;
         case 'string':
             compare = function(rowA, rowB) {
-                return rowA.cells[colNum].innerHTML > rowB.cells[colNum].innerHTML;
+                return rowB.cells[colNum].innerHTML - rowA.cells[colNum].innerHTML;
             };
             break;
     }

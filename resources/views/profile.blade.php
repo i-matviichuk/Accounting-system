@@ -10,12 +10,15 @@
 
             <div class="col-md-7">
 
+                @if(!auth()->user()->hasRole('student'))
+                    <i class="fa fa-angle-left" aria-hidden="true"><a href="{{ url()->previous() }}"> Назад</a></i>
+                @endif
                 <div class="panel panel-default">
                     <div class="panel-heading" style="background-color: #10c7bf; color: #fff">
 
                         <div class="fb fb__1" style="display: flex; justify-content: space-between;">
                             <div class="fb fb__1_2">
-                                <h4>User Profile</h4>
+                                <h4>Профіль</h4>
                             </div>
                             <div class="fb fb__1_3">
                                 <!-- 1 -->
@@ -38,12 +41,14 @@
                                                 {{--Відвідування</i></a></li>--}}
                                     @role('admin')
                                     <li>
-                                        <form id="loginForm" action="{{ route('delete', $user->id) }}"
-                                              onclick="return (confirm('Дійсно видалити?'))" method="post">
-                                            {{ csrf_field() }}
-                                            <input style="font-size: 14px" type="submit" id="login"
-                                                   value="Видалити користувача">
-                                        </form>
+                                        <a class="btn btn-danger" onclick="return (confirm('Дійсно видалити?'))"
+                                           href="{{ route('deleteUser', ['user' => $user->id])}}" title="Видалити">Видалити</a>
+                                    </li>
+                                    @endrole
+                                    @role('teacher')
+                                    <li>
+                                        <a class="btn btn-danger" onclick="return (confirm('Дійсно видалити?'))"
+                                           href="{{ route('deleteUser', ['user' => $user->id])}}" title="Видалити">Видалити</a>
                                     </li>
                                     @endrole
                                 </ul>

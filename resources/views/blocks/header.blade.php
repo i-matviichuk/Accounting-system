@@ -160,11 +160,12 @@
                                     <li><a @yield ('profile') href="{{ url('/profile/' . Auth::user()->id ) }}"
                                            style="font-size: 16px"><i class="fa fa-user" aria-hidden="true"> Моя
                                                 сторінка</i></a></li>
-                                    <li role="separator" class="divider w3-agile"></li>
+                                    {{--<li role="separator" class="divider w3-agile"></li>--}}
                                     <li>
+                                        {{--<a class="btn btn-success" href="{{ route('logout') }}" title="">Видалити</a>--}}
                                         <form id="loginForm" action="{{ route('logout') }}" method="post">
                                             {{ csrf_field() }}
-                                            <input style="font-size: 14px" type="submit" id="login" value="Sign out">
+                                            <input style="font-size: 14px" type="submit" id="login" value="Вийти">
                                         </form>
                                     </li>
                                 </ul>

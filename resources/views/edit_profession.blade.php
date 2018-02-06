@@ -10,7 +10,7 @@
                     <div class="panel-heading">Редагування</div>
 
                     <div class="panel-body">
-
+                        <i class="fa fa-angle-left" aria-hidden="true"><a href="{{ url()->previous() }}"> Назад</a></i>
                         <form id="form1" class="form-horizontal" method="POST" action="{{ route('updateProfession', $profession->id) }}">
                             {{ csrf_field() }}
 

@@ -8,9 +8,8 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">Редагування</div>
-
                     <div class="panel-body">
-
+                        <i class="fa fa-angle-left" aria-hidden="true"><a href="{{ url()->previous() }}"> Назад</a></i>
                         <form id="form1" class="form-horizontal" method="POST" action="{{ route('updateGroup', $group->id) }}">
                             {{ csrf_field() }}
 
@@ -68,7 +67,7 @@
 
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
-                                    <input class="btn btn-success" type="submit" value="Save" name="submit">
+                                    <input class="btn btn-success" type="submit" value="Зберегти" name="submit">
                                 </div>
                             </div>
                         </form>

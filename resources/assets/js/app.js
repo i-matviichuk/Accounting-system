@@ -5,15 +5,24 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+// require('./bootstrap');
 
 window.Vue = require('vue');
+import ElementUI from 'element-ui'
+import locale from 'element-ui/lib/locale/lang/ua';
+import 'element-ui/lib/theme-chalk/index.css';
+import Picker from './components/Picker.vue'
+import Radio from './components/Radio.vue'
 
+Vue.use(ElementUI, { locale });
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+
+Vue.component('picker', Picker);
+Vue.component('radio', Radio);
 
 Vue.component('example', require('./components/Example.vue'));
 

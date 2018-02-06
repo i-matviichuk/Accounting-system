@@ -8,8 +8,8 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">Реєстрація</div>
-
                     <div class="panel-body">
+                        <i class="fa fa-angle-left" aria-hidden="true"><a href="{{ route('users') }}"> Назад</a></i>
                         <div style="margin-bottom: 5%;">
                             <div class="banner-buttons">
                                 <div class="banner-button">
@@ -21,28 +21,11 @@
                             </div>
                         </div>
 
-                        {{--<script type="text/javascript">--}}
-                        {{--function form1()--}}
-                        {{--{--}}
-                        {{--document.getElementById("form1").style.display="block";--}}
-                        {{--document.getElementById("form2").style.display="none";--}}
-                        {{--// document.getElementById("form1").style.display="block";--}}
-                        {{--}--}}
-
-                        {{--function form2()--}}
-                        {{--{--}}
-                        {{--document.getElementById("form1").style.display="none";--}}
-                        {{--document.getElementById("form2").style.display="block";--}}
-                        {{--// document.getElementById("form1").style.display="block";--}}
-                        {{--}--}}
-                        {{--</script>--}}
-
-
                         <form id="form1" class="form-horizontal" method="POST" action="{{ route('new') }}">
                             {{ csrf_field() }}
 
                             <div class="form-group{{ $errors->has('lastname') ? ' has-error' : '' }}">
-                                <label for="lastname" class="col-md-4 control-label">Прізвище</label>
+                                <label for="lastname" class="col-md-4 control-label">Прізвище <a style="color: red">*</a></label>
 
                                 <div class="col-md-6">
                                     <input id="lastname" type="text" class="form-control" name="lastname"
@@ -57,7 +40,7 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                                <label for="name" class="col-md-4 control-label">Ім'я</label>
+                                <label for="name" class="col-md-4 control-label">Ім'я <a style="color: red">*</a></label>
 
                                 <div class="col-md-6">
                                     <input id="name" type="text" class="form-control" name="name"
@@ -72,7 +55,7 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('surname') ? ' has-error' : '' }}">
-                                <label for="surname" class="col-md-4 control-label">По-батькові</label>
+                                <label for="surname" class="col-md-4 control-label">По-батькові <a style="color: red">*</a></label>
 
                                 <div class="col-md-6">
                                     <input id="surname" type="text" class="form-control" name="surname"
@@ -87,7 +70,7 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('login') ? ' has-error' : '' }}">
-                                <label for="login" class="col-md-4 control-label">Login</label>
+                                <label for="login" class="col-md-4 control-label">Login <a style="color: red">*</a></label>
 
                                 <div class="col-md-6">
                                     <input id="login" type="text" class="form-control" name="login"
@@ -102,7 +85,7 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+                                <label for="email" class="col-md-4 control-label">E-Mail Address <a style="color: red">*</a></label>
 
                                 <div class="col-md-6">
                                     <input id="email" type="email" class="form-control" name="email"
@@ -117,7 +100,7 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('group_number') ? ' has-error' : '' }}">
-                                <label for="group_number" class="col-md-4 control-label">Номер групи (нн_рррр)</label>
+                                <label for="group_number" class="col-md-4 control-label">Номер групи</label>
 
                                 <div class="col-md-6">
                                     <p><select class="form-control" name="group_number">
@@ -152,13 +135,10 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('birthday') ? ' has-error' : '' }}">
-                                <label for="birthday" class="col-md-4 control-label">День народження</label>
-
+                                <label for="birthday" class="col-md-4 control-label">День народження <a style="color: red">*</a></label>
                                 <div class="col-md-6">
-                                    <input id="birthday" type="text" class="form-control" name="birthday"
-                                           placeholder="2000-12-31" value="{{ old('birthday') }}">
-
-                                    @if ($errors->has('birthday'))
+                                        <picker :old="{{ json_encode(old('birthday')) }}"></picker>
+                                @if ($errors->has('birthday'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('birthday') }}</strong>
                                     </span>
@@ -181,7 +161,7 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                                <label for="password" class="col-md-4 control-label">Password</label>
+                                <label for="password" class="col-md-4 control-label">Пароль <a style="color: red">*</a></label>
 
                                 <div class="col-md-6">
                                     <input id="password" type="password" class="form-control" name="password" required>
@@ -195,21 +175,25 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
+                                <label for="password-confirm" class="col-md-4 control-label">Повторіть пароль <a style="color: red">*</a></label>
 
                                 <div class="col-md-6">
                                     <input id="password-confirm" type="password" class="form-control"
                                            name="password_confirmation" required>
                                 </div>
                             </div>
-                            <div>Вкажіть роль користувача</div>
-                            <input type="radio" name="role" value="student" checked="checked"> Студент</input><br>
-                            <input type="radio" name="role" value="operator"> Оператор</input><br>
-                            <input type="radio" name="role" value="teacher"> Викладач</input><br>
-                            <input type="radio" name="role" value="admin"> Адміністратор</input><br>
+                            <div>Вкажіть роль користувача <a style="color: red">*</a></div>
+                            <div style="margin: 10px;">
+                                <radio :with-admin="true"></radio>
+                            </div>
+                            {{----}}
+                            {{--<input type="radio" name="role" value="student" checked="checked"> Студент</input><br>--}}
+                            {{--<input type="radio" name="role" value="operator"> Оператор</input><br>--}}
+                            {{--<input type="radio" name="role" value="teacher"> Викладач</input><br>--}}
+                            {{--<input type="radio" name="role" value="admin"> Адміністратор</input><br>--}}
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
-                                    <input class="btn btn-success" type="submit" value="Register" name="submit">
+                                    <input class="btn btn-success" type="submit" value="Додати" name="submit">
                                 </div>
                             </div>
                         </form>
@@ -222,14 +206,11 @@
                                 <label for="file">Завантажити</label>
                                 <input type="file" name="file" class="form-control"/><br>
                                 <div>Вкажіть роль користувача</div>
-                                <input type="radio" name="role" value="student" checked="checked"> Студент</input><br>
-                                <input type="radio" name="role" value="operator"> Оператор</input><br>
-                                <input type="radio" name="role" value="teacher"> Викладач</input><br>
-
-                                <!-- <input type="radio" name="role" value="admin">Адміністратор</input> -->
-
+                                <div>
+                                    <radio></radio>
+                                </div>
                             </div>
-                            <input class="btn btn-success" type="submit" value="Upload file" name="submit">
+                            <input class="btn btn-success" type="submit" value="Завантажити файл" name="submit">
                         </form>
                     </div>
                 </div>

@@ -12,7 +12,7 @@
             <!-- For correct display on small screens you must add 'data-title' to each 'td' in your table -->
             <div class="table-responsive-vertical shadow-z-1">
                 <!-- Table starts here -->
-                <table id="grid" class="table table-hover table-mc-light-blue">
+                <table id="grid" class="table table-hover table-mc-light-blue increment">
                     <thead>
                     <tr>
                         <th> №</th>
@@ -99,21 +99,33 @@
                                                                                         aria-hidden="true"
                                                                                         style="font-size: 16px">
                                                     Редагувати користувача</i></a></li>
+                                        <li>
+                                            <a class="btn btn-danger" onclick="return (confirm('Дійсно видалити?'))"
+                                               href="{{ route('deleteUser', ['user' => $user->id])}}" title="Видалити">Видалити</a>
+
+                                            {{--<form action="{{ route('delete', $user->id) }}"--}}
+                                                  {{--onclick="return (confirm('Дійсно видалити?'))" method="post">--}}
+                                                {{--{{ csrf_field() }}--}}
+                                                {{--<input style="font-size: 14px" type="submit" id="login"--}}
+                                                       {{--value="Видалити користувача">--}}
+                                            {{--</form>--}}
+                                        </li>
+                                        @endrole
+                                        @role('operator')
+                                        <li><a href="{{ route('edit', $user->id) }}">
+                                                <i class="fa fa-pencil" aria-hidden="true" style="font-size: 16px">
+                                                    Редагувати користувача</i></a></li>
                                         @endrole
                                         @role('teacher')
                                         <li><a href="{{ route('edit', $user->id) }}"><i class="fa fa-pencil"
-                                                                                        aria-hidden="true"
-                                                                                        style="font-size: 16px">
-                                                    Редагувати користувача</i></a></li>
-                                        @endrole
+                                        aria-hidden="true"
+                                        style="font-size: 16px">
+                                        Редагувати користувача</i></a></li>
                                         <li>
-                                            <form id="loginForm" action="{{ route('delete', $user->id) }}"
-                                                  onclick="return (confirm('Дійсно видалити?'))" method="post">
-                                                {{ csrf_field() }}
-                                                <input style="font-size: 14px" type="submit" id="login"
-                                                       value="Видалити користувача">
-                                            </form>
+                                            <a class="btn btn-danger" onclick="return (confirm('Дійсно видалити?'))"
+                                               href="{{ route('deleteUser', ['user' => $user->id])}}" title="Видалити">Видалити</a>
                                         </li>
+                                        @endrole
                                     </ul>
                                 </td>
                             </tr>

@@ -8,8 +8,8 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">Додати спеціальність</div>
-
                     <div class="panel-body">
+                        <i class="fa fa-angle-left" aria-hidden="true"><a href="{{ url()->previous() }}"> Назад</a></i>
                         <form class="form-horizontal" method="POST" action="{{ route('addProfession')}}">
                             {{ csrf_field() }}
                             <div class="form-group{{ $errors->has('specialty_title') ? ' has-error' : '' }}">

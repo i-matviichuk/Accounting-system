@@ -10,7 +10,7 @@
                     <div class="panel-heading">Редагування</div>
 
                     <div class="panel-body">
-
+                        <i class="fa fa-angle-left" aria-hidden="true"><a href="{{ url()->previous() }}"> Назад</a></i>
                         <form id="form1" class="form-horizontal" method="POST"
                               action="{{ route('update', $user->id) }}">
                             {{ csrf_field() }}
@@ -143,13 +143,14 @@
                                 <label for="birthday" class="col-md-4 control-label">День народження</label>
 
                                 <div class="col-md-6">
-                                    @if($user->birthday != NULL)
-                                        <input id="birthday" type="text" class="form-control" name="birthday"
-                                               value="{{$user->birthday}}">
-                                    @else
-                                        <input id="birthday" type="text" class="form-control" name="birthday"
-                                               placeholder="2000-12-31">
-                                    @endif
+                                    <picker :name="birthday" :date-birthday="{{ json_encode($user->birthday->format('Y-m-d')) }}"></picker>
+                                    {{--@if($user->birthday != NULL)--}}
+                                        {{--<input id="birthday" type="text" class="form-control" name="birthday"--}}
+                                               {{--value="{{$user->birthday}}">--}}
+                                    {{--@else--}}
+                                        {{--<input id="birthday" type="text" class="form-control" name="birthday"--}}
+                                               {{--placeholder="2000-12-31">--}}
+                                    {{--@endif--}}
 
                                     @if ($errors->has('birthday'))
                                         <span class="help-block">
@@ -350,19 +351,20 @@
                                 <label for="birthday" class="col-md-4 control-label">День народження</label>
 
                                 <div class="col-md-6">
-                                    @if($user->birthday != NULL)
-                                        <input id="birthday" type="text" class="form-control" name="birthday"
-                                               value="{{$user->birthday}}">
-                                    @else
-                                        <input id="birthday" type="text" class="form-control" name="birthday"
-                                               placeholder="2000-12-31">
-                                    @endif
+                                    <picker></picker>
+                                    {{--@if($user->birthday != NULL)--}}
+                                        {{--<input id="birthday" type="text" class="form-control" name="birthday"--}}
+                                               {{--value="{{$user->birthday}}">--}}
+                                    {{--@else--}}
+                                        {{--<input id="birthday" type="text" class="form-control" name="birthday"--}}
+                                               {{--placeholder="2000-12-31">--}}
+                                    {{--@endif--}}
 
-                                    @if ($errors->has('birthday'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('birthday') }}</strong>
-                                    </span>
-                                    @endif
+                                    {{--@if ($errors->has('birthday'))--}}
+                                        {{--<span class="help-block">--}}
+                                        {{--<strong>{{ $errors->first('birthday') }}</strong>--}}
+                                    {{--</span>--}}
+                                    {{--@endif--}}
                                 </div>
                             </div>
 
@@ -457,24 +459,23 @@
                             <input type="checkbox" name="show_role_field" value="show_role_field" id="show_role"
                                    onchange='showRole("show_role", "role_form")'> Змінити роль користувача</input>
                             <div id="role_form">
-                                <input type="radio" name="role" value="student"> Студент</input><br>
-                                <input type="radio" name="role" value="operator"> Оператор</input><br>
-                                <input type="radio" name="role" value="teacher"> Викладач</input><br>
-                                <input type="radio" name="role" value="admin"> Адміністратор</input><br>
+                                <div style="margin: 10px;">
+                                    <radio :with-admin="true"></radio>
+                                </div>
                             </div>
                             @endrole
                             @role('teacher')
                             <input type="checkbox" name="show_role_field" value="show_role_field" id="show_role"
                                    onchange='showRole("show_role", "role_form")'> Змінити роль користувача</input>
                             <div id="role_form">
-                                <input type="radio" name="role" value="student"> Студент</input><br>
-                                <input type="radio" name="role" value="operator"> Оператор</input><br>
-                                <input type="radio" name="role" value="teacher"> Викладач</input><br>
+                                <div style="margin: 10px;">
+                                    <radio></radio>
+                                </div>
                             </div>
                             @endrole
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
-                                    <input class="btn btn-success" type="submit" value="Save" name="submit">
+                                    <input class="btn btn-success" type="submit" value="Зберегти" name="submit">
                                 </div>
                             </div>
                         </form>

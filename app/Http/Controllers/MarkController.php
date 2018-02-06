@@ -24,7 +24,7 @@ class MarkController extends Controller
         $fill = (100 * $avg) / 5;
         $month = ["01" => "Січня", "02" => "Лютого", "03" => "Березня", "04" => "Квітня", "05" => "Травня", "06" => "Червня", "07" => "Липня",
             "08" => "Серпня", "09" => "Вересня", "10" => "Жовтня", "11" => "Листопада", "12" => "Грудня"];
-//        $fill = 100;
+
         if (auth()->check()) {
             if (auth()->user()->id == $user->id || auth()->user()->hasRole('admin') || auth()->user()->hasRole('teacher') || auth()->user()->hasRole('operator')) {
                 return view('marks', ['user' => $user, 'students' => $students, 'marks' => $marks, 'avg' => $avg, 'fill' => $fill, 'month' => $month]);
@@ -34,10 +34,6 @@ class MarkController extends Controller
         } else {
             return redirect('/');
         }
-//    	$user = Auth::user();
-//    	$marks = $user->mark;
-//    	$avg = $marks->avg('mark');
-//    	return view('profile')->with(['discipline' => $discipline, 'marks' => $marks, 'avg' => $avg]);
     }
 
     public function showForm(Group $group, User $user, Marks $marks, MarksRoles $marksRoles)
@@ -62,57 +58,71 @@ class MarkController extends Controller
         }
     }
 
-    public function updateMark(Request $request, Marks $marks)
+    public function updateMark(Request $request, Marks $mark, Group $group)
     {
+//        dd($request->input('submit'));
+//        dd($request->input());
         $this->validate($request, [
-            'mark' => 'required|integer|max:2',
+            'mark' => 'required|integer|max:5',
             'date' => 'required|date|max:255',
-            'comment' => 'required|string|max:255',
+            'comment' => 'max:255',
             'student_name' => 'required|string|max:255',
             'discipline_title' => 'required|integer|max:255',
             'role_title' => 'required|integer|max:255',
         ]);
         if ($request->input('mark') != "Оцінка..") {
-            $data['mark'] = $request->input('mark');
+            $mark->mark = $request->input('mark');
         } else {
             flash()->error('Виберіть оцінку!');
             return redirect()->back();
         }
 
-        $data['date'] = $request->input('date');
-        $data['comment'] = $request->input('comment');
+        $mark->date = $request->input('date');
+        $mark->comment = $request->input('comment');
         if ($request->input('student_name') != "Студент..") {
-            $data['user_id'] = $request->input('student_name');
+            $mark->user_id = $request->input('student_name');
         } else {
             flash()->error('Виберіть студента!');
             return redirect()->back();
         }
 
         if ($request->input('discipline_title') != "Предмет..") {
-            $data['discipline_id'] = $request->input('discipline_title');
+            $mark->discipline_id = $request->input('discipline_title');
         } else {
             flash()->error('Виберіть предмет!');
             return redirect()->back();
         }
 
         if ($request->input('role_title') != "Вид оцінки..") {
-            $data['role_id'] = $request->input('role_title');
+            $mark->role_id = $request->input('role_title');
         } else {
             flash()->error('Виберіть вид оцінки!');
             return redirect()->back();
         }
-
-        $mark = Marks::create($data);
+        $mark->save();
         flash()->success('Успішно оновлено');
-        return redirect()->back();
+        return redirect()->route('showGroupProfile', $group->id);
+    }
+
+    public function deleteMark(Marks $mark, Group $group)
+    {
+        if ($mark->delete())
+        {
+            flash()->success('Оцінка успішно видалена');
+        }
+        else
+        {
+            flash()->error('Оцінку не було видалено!');
+        }
+        return redirect()->route('showGroupProfile', $group->id);
     }
 
     public function addMark(Request $request, User $user)
     {
         $this->validate($request, [
-            'mark' => 'required|integer|max:2',
+            'mark' => 'required|integer|max:5',
             'date' => 'required|date|max:255',
-            'comment' => 'required|string|max:255',
+            'comment' => 'max:255',
             'student_name' => 'required|string|max:255',
             'discipline_title' => 'required|integer|max:255',
             'role_title' => 'required|integer|max:255',
@@ -128,7 +138,7 @@ class MarkController extends Controller
                     if (!empty($data) && $data->count()) {
 
                         foreach ($data as $key => $value) {
-                            if ($request->input('discipline_title') != "Предмет.." && $request->input('role_title') != "Предмет..") {
+                            if ($request->input('discipline_title') != "Предмет.." && $request->input('role_title') != "Вид оцінки..") {
                                 $user = User::where('login', '=', $value->login)->first();
                                 $insert[] = [
                                     'discipline_id' => $request->input('discipline_title'),

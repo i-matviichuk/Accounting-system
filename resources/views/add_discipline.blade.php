@@ -8,8 +8,8 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">Додати предмет</div>
-
                     <div class="panel-body">
+                        <i class="fa fa-angle-left" aria-hidden="true"><a href="{{ url()->previous() }}"> Назад</a></i>
                         <form id="form1" class="form-horizontal" method="POST" action="{{ route('addDiscipline', $group->id)}}">
                             {{ csrf_field() }}
                             <div class="form-group{{ $errors->has('discipline_title') ? ' has-error' : '' }}">

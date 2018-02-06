@@ -146,10 +146,9 @@ public function update(Request $request, User $user)
     return redirect()->route('profile',['user' => $user->id]);
 }
 
-public function destroy($id)
+public function deleteUser(User $user)
 {
-    if ( Auth::user()->id != $id ) {
-        $user = User::find($id);
+    if ( Auth::user()->id != $user->id) {
         $user->delete();
         flash()->success('Користувач успішно видалений');
         return redirect()->route('users');

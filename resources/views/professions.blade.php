@@ -9,7 +9,7 @@
             <a style="float: right;" href="/professions/add"><i class="fa fa-plus" aria-hidden="true"></i> Додати
                 спеціальність</a>
             <div class="table-responsive-vertical shadow-z-1">
-                <table id="grid" class="table table-hover table-mc-light-blue">
+                <table id="grid" class="table table-hover table-mc-light-blue increment">
                     <thead>
                     <tr>
                         <th data-type="number" style="width: 15%"><input type="text" id="myInput0" style="color: black"

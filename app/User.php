@@ -55,11 +55,19 @@ class User extends Authenticatable
     {
         return $this->mark()
             ->where(function ($where_sql) {
-                $where_sql->where('role_id', 3)
-                    ->orWhere('role_id', 4);
+                $where_sql->whereIn('role_id', [3, 4]);
             });
     }
-    
+
+    public function studentAvg()
+    {
+        return $this->examMarks()
+            ->get()
+            ->map(function(Marks $mark) {
+                return $mark->mark;
+            })
+            ->avg();
+    }
 
     // public function roles() {
     //     return $this->belongsToMany('App\Role', 'users_roles', 'user_id', 'role_id');
@@ -129,4 +137,14 @@ class User extends Authenticatable
     {
         return $query->where('group_id', $group_id);
     }
+
+//    public function isAdmin()
+//    {
+//        return false;
+//    }
+//
+//    public function isTeacher()
+//    {
+//        return false;
+//    }
 }

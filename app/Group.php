@@ -25,9 +25,24 @@ class Group extends Model
         return $this->hasMany(AcademicDisciplines::class, 'group_id', 'id');
     }
 
-//	public function attachDiscipline($discipline_id)
-//	{
-//		$this->disciplines()->attach($discipline_id);
-//		return $this;
-//	}
+    public function students()
+    {
+        return $this->hasMany(User::class);
+    }
+
+    public function groupAvg()
+    {
+        return $this->students()
+            ->whereHas('mark', function($sql) {
+                $sql->whereIn('role_id', [3, 4]);
+            })
+            ->get()
+            ->map(function (User $student) {
+                $count_marks = $student->mark()->count();
+                if ($count_marks > 0) {
+                    return $student->mark()->sum('mark') / $count_marks;
+                }
+                return 0;
+            });
+    }
 }

@@ -3,7 +3,6 @@
 @section('groups') class="active" @endsection
 
 @section('content')
-
     <div class="container" style="padding-top: 5%; padding-bottom: 8%; width: 70%">
         <div id="demo">
             <h1 style="float: left;"><i class="fa fa-users" aria-hidden="true"></i> Групи</h1>
@@ -12,7 +11,7 @@
             <!-- For correct display on small screens you must add 'data-title' to each 'td' in your table -->
             <div class="table-responsive-vertical shadow-z-1">
                 <!-- Table starts here -->
-                <table id="grid" class="table table-hover table-mc-light-blue">
+                <table id="grid" class="table table-hover table-mc-light-blue increment">
                     <thead>
                     <tr>
                         <th data-type="number" style="width: 7%"><input type="text" id="myInput0" style="color: black" onkeyup="myFunction()" placeholder="Пошук по ID.." title="Введіть ID"> № </th>
@@ -29,18 +28,11 @@
                             <tr>
                                 <td></td>
                                 <td><a style="color: #999" href="{{route('showGroupProfile', $group->id)}}">{{$group->group_number}}</a></td>
-                                <td>{{count($users->where('group_id', '==', $group->id))}}</td>
+                                <td>{{ count($users->where('group_id', '==', $group->id)) }}</td>
 
-                                <td>{{$group->curator->lastname}} {{$group->curator->name}} {{$group->curator->surname}}</td>
-                                <td>{{$group->profession->specialty_title}}</td>
-                                <td></td>
-                                {{--@if($user->group != NULL)--}}
-                                    {{--<td><a href="/">{{$user->group->group_number}}</a></td>--}}
-                                {{--@else--}}
-                                    {{--<td></td>--}}
-                                {{--@endif--}}
-
-                                {{--<td>{{str_limit($user->note, 15)}}</td>--}}
+                                <td>{{ $group->curator->lastname}} {{$group->curator->name}} {{$group->curator->surname}} </td>
+                                <td>{{ $group->profession->specialty_title }}</td>
+                                <td>{{ round($group->groupAvg()->avg(), 2) }}</td>
                                 <td class="dropdown w3-agile">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></a>
                                     <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
